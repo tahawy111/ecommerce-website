@@ -10,8 +10,10 @@ app.use(express.urlencoded({ extended: true }));
 require("./routes")(app);
 
 mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("DATABASE CONNECTED"));
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+  })
+  .then(() => console.log("DB Connected"));
 
 app.listen(process.env.PORT, () =>
   console.log(`App is Listening at http://localhost:${process.env.PORT}`)

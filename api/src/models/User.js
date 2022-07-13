@@ -21,15 +21,17 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
     },
     hash_password: { type: String, required: true },
-    role: { type: String, enum: ["user", "admin"], default: "admin" },
+    role: { type: String, enum: ["user", "admin"], default: "user" },
     contactNumber: { type: String },
     porfilePicture: { type: String },
   },
   { timestamps: true }
 );
 
-userSchema.virtual("password").set((password) => {
-  this.hash_password = bcrypt.hashSync();
-});
+userSchema.methods = {
+  authenticate: (password) => {
+    return bcrypt.compareSync(password, this.hash_password);
+  },
+};
 
 module.exports = mongoose.model("user", userSchema);
