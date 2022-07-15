@@ -1,10 +1,10 @@
-const bcrypt = require("bcrypt");
-const User = require("../../models/User");
-const jwt = require("jsonwebtoken");
+const bcrypt = require('bcrypt');
+const User = require('../../models/User');
+const jwt = require('jsonwebtoken');
 
 exports.signup = async (req, res) => {
   if (await User.findOne({ email: req.body.email }))
-    res.status(400).json({ message: "Email already registered" });
+    res.status(400).json({ message: 'Email already registered' });
 
   const { firstName, lastName, email, password } = req.body;
 
@@ -17,28 +17,28 @@ exports.signup = async (req, res) => {
     email,
     hash_password: bcrypt.hashSync(password, 10),
     username: Math.random().toString(),
-    role: "admin",
+    role: 'admin',
   });
 
   try {
     const user = await _user.save();
-    res.status(201).json({ message: "Admin created successfully..!" });
+    res.status(201).json({ message: 'Admin created successfully..!' });
   } catch (error) {
-    return res.status(400).json({ message: "Something went wrong" });
+    return res.status(400).json({ message: 'Something went wrong' });
   }
 };
 
 exports.signin = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
-    !user && res.status(400).json({ message: "User not found" });
+    !user && res.status(400).json({ message: 'User not found' });
 
     if (
       bcrypt.compareSync(req.body.password, user.hash_password) &&
-      user.role === "admin"
+      user.role === 'admin'
     ) {
       const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-        expiresIn: "30d",
+        expiresIn: '30d',
       });
       const { firstName, lastName, email, role, fullName, _id } = user;
 
@@ -47,16 +47,9 @@ exports.signin = async (req, res) => {
         user: { _id, firstName, lastName, email, role, fullName },
       });
     } else {
-      res.status(400).json({ message: "Invalid password" });
+      res.status(400).json({ message: 'Invalid password' });
     }
   } catch (error) {
     res.status(400).json({ error });
   }
-};
-
-exports.requireSignin = (req, res, next) => {
-  const token = req.headers.authorization.split(" ")[1];
-  const userId = jwt.verify(token, process.env.JWT_SECRET);
-  req.user = userId._id;
-  next();
 };

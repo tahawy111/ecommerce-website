@@ -1,4 +1,6 @@
 module.exports = (app) => {
-  app.use("/api", require("./auth.js"));
-  app.use("/api", require("./admin/auth"));
+  app.use('/api', require('./auth'));
+  app.use('/api', require('./admin/auth'));
+  // category
+  app.use('/api', require('./category'));
 };
