@@ -33,9 +33,13 @@ exports.signin = async (req, res) => {
     !user && res.status(400).json({ message: 'User not found' });
 
     if (bcrypt.compareSync(req.body.password, user.hash_password)) {
-      const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-        expiresIn: '30d',
-      });
+      const token = jwt.sign(
+        { _id: user._id, role: user.role },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: '30d',
+        }
+      );
       const { firstName, lastName, email, role, fullName, _id } = user;
 
       res.status(200).json({

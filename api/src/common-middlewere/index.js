@@ -6,3 +6,10 @@ exports.requireSignin = (req, res, next) => {
   req.user = userId._id;
   next();
 };
+exports.adminMiddlewere = (req, res, next) => {
+  if (req.user.role === 'admin') {
+    next();
+  }
+
+  res.status(400).json({ message: 'Access denied' });
+};
