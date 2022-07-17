@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema(
   {
@@ -15,22 +15,22 @@ const productSchema = new mongoose.Schema(
     quantity: { type: Number, required: true },
     category: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "categorie",
+      ref: 'categorie',
       required: true,
     },
     reviews: [
       {
-        userId: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+        userId: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
         review: String,
       },
     ],
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
+      ref: 'user',
       required: true,
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("product", productSchema);
+module.exports = mongoose.model('product', productSchema);

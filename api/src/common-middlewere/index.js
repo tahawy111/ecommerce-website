@@ -11,11 +11,13 @@ exports.requireSignin = (req, res, next) => {
   }
 };
 exports.userMiddlewere = (req, res, next) => {
-  if (req.user.role !== 'user' || 'admin') {
-    return res.status(400).json({ message: 'User access denied' });
+  if (req.user.role == 'admin') {
+    next();
+  } else if (req.user.role == 'user') {
+    next();
+  } else {
+    return res.status(400).json({ message: 'Access denied' });
   }
-
-  next();
 };
 exports.adminMiddlewere = (req, res, next) => {
   if (req.user.role !== 'admin') {
