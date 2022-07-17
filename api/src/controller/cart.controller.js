@@ -3,9 +3,11 @@ const Cart = require('../models/Cart');
 exports.addItemToCart = async (req, res) => {
   try {
     const cart = await Cart.findOne({ user: req.user._id });
+    let totalPrice = 0;
     if (cart) {
       const product = req.body.cartItems.product;
       const item = cart.cartItems.find((c) => c.product == product);
+      let condition, action;
 
       if (item) {
         // if cart already exists then update quantity
@@ -13,12 +15,21 @@ exports.addItemToCart = async (req, res) => {
 
         // update quantity
         cart.cartItems[indexOfProduct].quantity =
-          cart.cartItems[indexOfProduct].quantity + req.body.cartItems.quantity;
+          cart.cartItems[indexOfProduct].quantity +
+          +req.body.cartItems.quantity;
 
         // update price
         cart.cartItems[indexOfProduct].price =
-          cart.cartItems[indexOfProduct].price + req.body.cartItems.price;
+          cart.cartItems[indexOfProduct].price + +req.body.cartItems.price;
 
+        // Get Cart total price
+
+        cart.cartItems.forEach((item) => {
+          totalPrice += item.price;
+        });
+
+        condition = { user: req.user._id, 'cartItems.product': product };
+        action = { $set: cart };
         const updatedCart = await Cart.findOneAndUpdate(
           { user: req.user._id, 'cartItems.product': product },
           {
@@ -28,32 +39,41 @@ exports.addItemToCart = async (req, res) => {
 
         res.status(201).json({ cart: updatedCart });
       } else {
-        // // (Another Way To Update Cart)
-        // // if cart already exists then update cartItems array
-        // cart.cartItems = cart.cartItems.push(req.body.cartItems);
-        // const updatedCart = await Cart.findOneAndUpdate(
-        //   { user: req.user._id },
-        //   {
-        //     $set: cart
-        //   }
-        // );
+        cart.cartItems.forEach((item) => {
+          totalPrice += item.price;
+        });
 
+        // (Another Way To Update Cart)
         // if cart already exists then update cartItems array
+        cart.cartItems = cart.cartItems.push(req.body.cartItems);
         const updatedCart = await Cart.findOneAndUpdate(
           { user: req.user._id },
           {
-            $push: {
-              cartItems: req.body.cartItems,
-            },
+            $set: cart,
           }
         );
+
+        // if cart already exists then update cartItems array
+        // const updatedCart = await Cart.findOneAndUpdate(
+        //   { user: req.user._id },
+        //   {
+        //     $push: {
+        //       cartItems: req.body.cartItems,
+        //     },
+        //   }
+        // );
+
         res.status(201).json({ cart: updatedCart });
       }
     } else {
       // if cart not exist then create a new cart
+
       const newCart = new Cart({
         user: req.user._id,
-        cartItems: [req.body.cartItems],
+        cartItems: [
+          { ...req.body.cartItems, singlePrice: +req.body.cartItems.price },
+        ],
+        totalPrice: +req.body.cartItems.price,
       });
 
       try {
