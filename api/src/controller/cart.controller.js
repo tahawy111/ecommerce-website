@@ -44,13 +44,7 @@ exports.addItemToCart = async (req, res) => {
       } else {
         // (Another Way To Update Cart)
         // if cart already exists then update cartItems array
-        let totalPrice = 0;
-        cart.totalPrice = 0;
-        cart.cartItems.forEach((e) => {
-          totalPrice += e.price;
-        });
-
-        cart.totalPrice = totalPrice - item.price;
+        cart.totalPrice += +req.body.cartItems.price;
         cart.cartItems = cart.cartItems.push(req.body.cartItems);
         const updatedCart = await Cart.findOneAndUpdate(
           { user: req.user._id },
