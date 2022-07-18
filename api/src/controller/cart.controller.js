@@ -20,16 +20,15 @@ exports.addItemToCart = async (req, res) => {
 
         // update price
         cart.cartItems[indexOfProduct].price =
-          cart.cartItems[indexOfProduct].price + +req.body.cartItems.price;
+          cart.cartItems[indexOfProduct].price +
+          +req.body.cartItems.price * +req.body.cartItems.quantity;
+
+        // Get Cart total quantity
+        cart.totalQuantity += +req.body.cartItems.quantity;
 
         // Get Cart total price
-        let totalPrice = 0;
-        cart.totalPrice = 0;
-        cart.cartItems.forEach((e) => {
-          totalPrice += e.price;
-        });
-
-        cart.totalPrice = totalPrice;
+        cart.totalPrice +=
+          +req.body.cartItems.price * +req.body.cartItems.quantity;
 
         condition = { user: req.user._id, "cartItems.product": product };
         action = { $set: cart };
@@ -44,8 +43,12 @@ exports.addItemToCart = async (req, res) => {
       } else {
         // (Another Way To Update Cart)
         // if cart already exists then update cartItems array
-        cart.totalPrice += +req.body.cartItems.price;
-        cart.cartItems = cart.cartItems.push(req.body.cartItems);
+        const { price, ...others } = req.body.cartItems;
+        const lastPrice = +price * +req.body.cartItems.quantity;
+        cart.totalPrice += +price * +req.body.cartItems.quantity;
+        const cartItems = { price: lastPrice, singlePrice: +price, ...others };
+        cart.totalQuantity += +req.body.cartItems.quantity;
+        cart.cartItems = cart.cartItems.push(cartItems);
         const updatedCart = await Cart.findOneAndUpdate(
           { user: req.user._id },
           {
@@ -67,13 +70,19 @@ exports.addItemToCart = async (req, res) => {
       }
     } else {
       // if cart not exist then create a new cart
-
+      // const price = +req.body.cartItems.price;
+      const { price, ...others } = req.body.cartItems;
       const newCart = new Cart({
         user: req.user._id,
         cartItems: [
-          { ...req.body.cartItems, singlePrice: +req.body.cartItems.price },
+          {
+            ...others,
+            price: +price * +req.body.cartItems.quantity,
+            singlePrice: +req.body.cartItems.price,
+          },
         ],
-        totalPrice: +req.body.cartItems.price,
+        totalPrice: +price * +req.body.cartItems.quantity,
+        totalQuantity: +req.body.cartItems.quantity,
       });
 
       try {
