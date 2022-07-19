@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
     cb(null, path.join(path.dirname(__dirname), 'uploads', 'productPictures'));
   },
   filename: function (req, file, cb) {
-    cb(null, `${shortid.generate()}-${file.originalname}`);
+    cb(null, `${shortid.generate()}-${file.originalname.trim()}`);
   },
 });
 
@@ -23,7 +23,5 @@ router.post(
   upload.array('productPicture'),
   createProduct
 );
-
-// router.get("/category/getCategory", getCategories);
 
 module.exports = router;
