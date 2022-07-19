@@ -1,11 +1,32 @@
-const { requireSignin, adminMiddlewere } = require("../common-middlewere");
+const { requireSignin, adminMiddlewere } = require('../common-middlewere');
 const {
   createCategory,
   getCategories,
-} = require("../controller/category.controller");
-const router = require("express").Router();
+} = require('../controller/category.controller');
+const router = require('express').Router();
 
-router.post("/category/create", requireSignin, adminMiddlewere, createCategory);
-router.get("/category/getCategory", getCategories);
+const shortid = require('shortid');
+const multer = require('multer');
+const path = require('path');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(path.dirname(__dirname), 'uploads', 'categoryImage'));
+  },
+  filename: function (req, file, cb) {
+    cb(null, `${shortid.generate()}-${file.originalname}`);
+  },
+});
+
+const upload = multer({ storage });
+
+router.post(
+  '/category/create',
+  requireSignin,
+  adminMiddlewere,
+  upload.single('categoryImage'),
+  createCategory
+);
+router.get('/category/getCategory', getCategories);
 
 module.exports = router;
