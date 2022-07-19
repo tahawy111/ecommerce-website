@@ -3,7 +3,7 @@ const Category = require('../models/Category');
 
 function createCategories(categories, parentId = null) {
   const categoryList = [];
-
+  let category;
   if (parentId == null) {
     category = categories.filter((cat) => cat.parentId == undefined);
   } else {
@@ -29,7 +29,7 @@ exports.createCategory = async (req, res) => {
   }
 
   if (req.file) {
-    categoryObj.categoryImage = `http://localhost:${process.env.PORT}/public/${req.file.filename}`;
+    categoryObj.categoryImage = `${process.env.API}/public/${req.file.filename}`;
   }
 
   const newCat = new Category(categoryObj);
