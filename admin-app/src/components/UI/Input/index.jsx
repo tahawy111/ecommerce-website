@@ -3,7 +3,11 @@ const Input = (props) => {
   return (
     <Form.Group className="mb-3">
       <Form.Label>{props.label}</Form.Label>
-      <Form.Control type={props.type} placeholder={props.placeholder} />
+      <Form.Control
+        type={props.type}
+        placeholder={props.placeholder}
+        value={props.value}
+      />
       <Form.Text className="text-muted">{props.errorMessage}</Form.Text>
     </Form.Group>
   );
