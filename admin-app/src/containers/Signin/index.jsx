@@ -1,7 +1,9 @@
 import Layout from "./../../components/Layout/index";
 import { Form, Button, Container } from "react-bootstrap";
 import Input from "../../components/UI/Input";
+import { useDispatch } from "react-redux";
 const Signin = () => {
+  const dispatch = useDispatch();
   return (
     <Layout>
       <Container style={{ maxWidth: 700 }} className="mt-5">
