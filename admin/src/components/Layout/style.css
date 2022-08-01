@@ -1,0 +1,12 @@
+.nav-link.active,
+.nav-link.active:hover {
+  color: white;
+  background: #333;
+  padding-left: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 5px 0 0 5px;
+}
+.nav-link:hover {
+  text-decoration: underline;
+}
