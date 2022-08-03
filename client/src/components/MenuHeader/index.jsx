@@ -4,31 +4,43 @@ import { useEffect } from "react";
 import { getCategory } from "../../slices/categorySlice";
 
 const MenuHeader = (props) => {
-  const category = useSelector((state) => state.category);
-  console.log(category);
+  const { category } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getCategory());
   }, [dispatch]);
 
-  // const renderCategories = (categories) => {
-  //   let myCategories = [];
+  const renderCategories = (categories) => {
+    let myCategories = [];
 
-  //   for (let category of categories) {
-  //     myCategories.push(
-  //       <li key={category.name}>
-  //         {category.name}
-  //         {category.children.length > 0 ? (
-  //           <ul>{renderCategories(category.children)}</ul>
-  //         ) : null}
-  //       </li>
-  //     );
-  //   }
-  //   return myCategories;
-  // };
+    for (let category of categories) {
+      myCategories.push(
+        <li key={category.name}>
+          {category.parentId ? (
+            <a href={category.slug}>{category.name}</a>
+          ) : (
+            <span>{category.name}</span>
+          )}
 
-  return <div className="menuHeader"></div>;
+          {category.children.length > 0 ? (
+            <ul>{renderCategories(category.children)}</ul>
+          ) : null}
+        </li>
+      );
+    }
+    return myCategories;
+  };
+
+  return (
+    <div className="menuHeader">
+      <ul>
+        {category.categories.length > 0
+          ? renderCategories(category.categories)
+          : null}
+      </ul>
+    </div>
+  );
 };
 
 export default MenuHeader;
