@@ -1,7 +1,8 @@
-const { loginSuccess, loginFailure } = require("../slices/authSlice");
+import { loginSuccess, loginFailure } from "../slices/authSlice";
 export const isUserLoggedIn = (dispatch) => {
   const token = localStorage.getItem("token");
   const user = localStorage.getItem("user");
+
   if (token) {
     dispatch(loginSuccess({ token, user: JSON.parse(user) }));
   } else {

@@ -1,4 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axiosIntance from "../helpers/axios";
+
+export const fetchProducts = createAsyncThunk(
+  "product/fetchProducts",
+  async (id = null, { rejectWithValue }) => {
+    try {
+      const res = await axiosIntance.get("/product/getProducts");
+      console.log(res);
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 const initialState = {
   error: null,
   message: false,
@@ -6,9 +20,29 @@ const initialState = {
   products: [],
 };
 
-export const userSlice = createSlice({
+const buildProductList = (products, product) => {
+  products.push(product);
+  return products;
+};
+
+export const productSlice = createSlice({
   name: "product",
   initialState,
+  extraReducers: (builder) => {
+    builder.addCase(fetchProducts.pending, (state) => {
+      state.loading = true;
+      state.products = [];
+    });
+    builder.addCase(fetchProducts.fulfilled, (state, action) => {
+      state.loading = false;
+      state.products = action.payload;
+    });
+    builder.addCase(fetchProducts.rejected, (state, action) => {
+      state.loading = false;
+      state.products = [];
+      state.error = action.payload;
+    });
+  },
   reducers: {
     // getAllInitialDataRequest: (state, action) => {},
     // getAllInitialDataSuccess: (state, action) => {},
@@ -24,10 +58,11 @@ export const userSlice = createSlice({
       };
     },
     addNewProductSuccess: (state, action) => {
-      const newProduct = action.payload.product;
+      // const newProduct = action.payload.product;
+      console.log(state.products, action.payload.product);
       return {
         ...state,
-        products: state.products.push({ ...newProduct }),
+        products: buildProductList(state.products, action.payload.product),
         loading: false,
       };
     },
@@ -43,6 +78,6 @@ export const {
   getAllProductsSuccess,
   getAllProductsFailure,
   addNewProductSuccess,
-} = userSlice.actions;
+} = productSlice.actions;
 
-export default userSlice.reducer;
+export default productSlice.reducer;

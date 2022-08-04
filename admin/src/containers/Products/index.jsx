@@ -4,7 +4,7 @@ import { Button, Col, Form, Row, Table } from "react-bootstrap";
 import Input from "./../../components/UI/Input/index";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addProduct, getProducts } from "../../actions/product.actions";
+import { addProduct } from "../../actions/product.actions";
 import NewModal from "../../components/UI/Modal";
 import "./style.css";
 import { generatePublicUrl } from "../../urlConfig";
@@ -33,7 +33,11 @@ const Products = () => {
   const categories = useSelector((state) => state.category);
   const [productDetails, setProductDetails] = useState(null);
   const handleProductPictures = (e) => {
-    setProductPictures([...productPictures, e.target.files[0]]);
+    if (e.target.files[0] !== undefined) {
+      setProductPictures([...productPictures, e.target.files[0]]);
+    } else {
+      alert("Can't add nothing");
+    }
   };
   const handleClose = async () => {
     const form = new FormData();
@@ -45,9 +49,7 @@ const Products = () => {
     for (let pic of productPictures) {
       form.append("productPicture", pic);
     }
-
-    addProduct(dispatch, form);
-    getProducts(dispatch);
+    dispatch(addProduct(form));
 
     setShow(false);
   };
@@ -145,9 +147,10 @@ const Products = () => {
           name="productPicture"
         />
         {productPictures.length > 0
-          ? productPictures.map((pic, index) => (
-              <div key={index}>{pic.name}</div>
-            ))
+          ? productPictures.map(
+              (pic, index) =>
+                pic !== undefined && <div key={index}>{pic.name}</div>
+            )
           : null}
       </NewModal>
     );
@@ -218,30 +221,26 @@ const Products = () => {
 
   return (
     <Layout sidebar>
-      {products.loading ? (
-        <h5 className="text-center">Loading...</h5>
-      ) : (
-        <>
-          <Row>
-            <Col md={12}>
-              <div className="d-flex justify-content-between">
-                <h3>Products</h3>
+      <>
+        <Row>
+          <Col md={12}>
+            <div className="d-flex justify-content-between">
+              <h3>Products</h3>
 
-                <Button variant="primary" className="mt-3" onClick={handleShow}>
-                  Add
-                </Button>
-              </div>
-            </Col>
-          </Row>
+              <Button variant="primary" className="mt-3" onClick={handleShow}>
+                Add
+              </Button>
+            </div>
+          </Col>
+        </Row>
 
-          <Row>
-            <Col>{renderProducts()}</Col>
-          </Row>
+        <Row>
+          <Col>{renderProducts()}</Col>
+        </Row>
 
-          {renderAddProductModal()}
-          {renderProductDeailsModal()}
-        </>
-      )}
+        {renderAddProductModal()}
+        {renderProductDeailsModal()}
+      </>
     </Layout>
   );
 };

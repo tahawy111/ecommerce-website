@@ -31,10 +31,11 @@ export const authSlice = createSlice({
       return { ...state, ...action.payload };
     },
 
-    logoutRequest: (state, action) => {
+    logoutRequest: (state) => {
       return { ...state, authenticate: true, loading: true };
     },
-    logoutSuccess: (state, action) => {
+    logoutSuccess: (state) => {
+      localStorage.clear();
       return { ...state, authenticate: false, loading: false };
     },
     logoutFailure: (state, action) => {

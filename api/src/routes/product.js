@@ -2,6 +2,7 @@ const { requireSignin, adminMiddlewere } = require("../common-middlewere");
 const {
   createProduct,
   getProducts,
+  getProductsBySlug,
 } = require("../controller/product.controller");
 const router = require("express").Router();
 const shortid = require("shortid");
@@ -27,5 +28,6 @@ router.post(
   createProduct
 );
 router.get("/product/getProducts", requireSignin, adminMiddlewere, getProducts);
+router.get("/products/:slug", getProductsBySlug);
 
 module.exports = router;
