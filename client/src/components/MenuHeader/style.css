@@ -22,11 +22,57 @@
   display: block;
   line-height: 40px;
   cursor: pointer;
-  padding: 0 20px;
-  font-size: 15px;
+  padding: 0 15px;
+  font-size: 18px;
   font-weight: bold;
   color: #212121;
 }
 .menuHeader > ul > li > span:hover {
   color: #2874f0;
+}
+
+.menuHeader > ul > li > ul {
+  position: absolute;
+  background: #fff;
+  left: 0;
+  right: 0;
+  display: none;
+  border: 1px solid #cecece;
+}
+.menuHeader > ul > li:hover ul {
+  display: block;
+}
+.menuHeader > ul > li > ul > li {
+  margin: 0 15px;
+  min-width: 150px;
+}
+/* .menuHeader > ul > li > ul > li {
+  position: relative;
+} */
+.menuHeader > ul > li:hover > ul {
+  display: flex;
+}
+.menuHeader > ul > li > ul > li > a {
+  font-weight: bold;
+  display: block;
+  position: relative;
+}
+.menuHeader > ul > li > ul > li > a::after {
+  content: "";
+  border-top: 3.75px solid transparent;
+  border-left: 7.5px solid #555;
+  border-bottom: 3.75px solid transparent;
+  width: 0;
+  height: 0;
+  position: absolute;
+  margin-left: 5px;
+  top: 53%;
+  transform: translateY(-50%);
+}
+.menuHeader > ul > li > ul > li a {
+  padding: 3px 0;
+  font-size: 16px;
+  display: block;
+  text-decoration: none;
+  color: #707070;
 }
