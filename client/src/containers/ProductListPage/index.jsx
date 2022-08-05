@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Layout from "./../../components/Layout/index";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductBySlug } from "./../../actions/product.actions";
 import { useParams } from "react-router-dom";
 
 import "./style.css";
+import { generatePublicUrl } from "../../helpers/api";
 
 const ProductListPage = () => {
   const { slug } = useParams();
@@ -12,7 +13,7 @@ const ProductListPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProductBySlug(slug));
-  }, []);
+  }, [dispatch, slug]);
 
   const keys = Object.keys(product.productsByPrice);
 
@@ -21,7 +22,7 @@ const ProductListPage = () => {
       {keys.map((key, index) => (
         <div className="card">
           <div className="cardHeader">
-            <div>{key}</div>
+            <div>{`${slug} ${key}`}</div>
             <button className="cardBtn">View All</button>
           </div>
           <div style={{ display: "flex" }}>
@@ -29,7 +30,7 @@ const ProductListPage = () => {
               <div className="productContainer">
                 <div className="productImgContainer">
                   <img
-                    src={`http://localhost:2000/public/${product.productPictures[0].img}`}
+                    src={generatePublicUrl(product.productPictures[0].img)}
                     alt=""
                   />
                 </div>

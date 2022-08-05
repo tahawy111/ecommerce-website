@@ -9,6 +9,8 @@
   justify-content: space-between;
   padding: 10px 20px;
   border-bottom: 1px solid #cecece;
+  margin: 0 10px;
+  align-items: center;
 }
 .productContainer {
   width: 200px;
@@ -18,7 +20,7 @@
   height: 150px;
   overflow: hidden;
   text-align: center;
-  margin: 0 auto;
+  margin: 5px auto;
 }
 
 .productContainer .productImgContainer img {
@@ -35,10 +37,9 @@
   font-weight: 14px;
 }
 .cardBtn {
-  padding: 5px;
-  background-color: #dc3545;
+  padding: 10px;
+  background-color: #0d6efd;
   border: none;
-  border-radius: 5px;
   transform: scale(1.1);
   margin: 5px 10px;
   color: #fff;
