@@ -10,19 +10,44 @@ const ProductListPage = () => {
   const { slug } = useParams();
   const product = useSelector((state) => state.product);
   const dispatch = useDispatch();
-  const [productsDetails, setProductsDetails] = useState(null);
-  console.log(product);
   useEffect(() => {
     dispatch(getProductBySlug(slug));
-    setProductsDetails(product);
   }, []);
 
-  if (!productsDetails) {
-    return <div>no</div>;
-  }
-  const keys = Object.keys(productsDetails.productsByPrice);
+  const keys = Object.keys(product.productsByPrice);
 
-  return <Layout>{keys.map((key, index) => key)}</Layout>;
+  return (
+    <Layout>
+      {keys.map((key, index) => (
+        <div className="card">
+          <div className="cardHeader">
+            <div>{key}</div>
+            <button className="cardBtn">View All</button>
+          </div>
+          <div style={{ display: "flex" }}>
+            {product.productsByPrice[key].map((product) => (
+              <div className="productContainer">
+                <div className="productImgContainer">
+                  <img
+                    src={`http://localhost:2000/public/${product.productPictures[0].img}`}
+                    alt=""
+                  />
+                </div>
+                <div className="productInfo">
+                  <div style={{ margin: "5px 0" }}>{product.name}</div>
+                  <div>
+                    <span>4.3</span>
+                    <span> (5254)</span>
+                  </div>
+                  <div className="productPrice">{product.price}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </Layout>
+  );
 };
 
 export default ProductListPage;
