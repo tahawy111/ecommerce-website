@@ -1,13 +1,7 @@
-import Header from "../../components/Header";
-import MenuHeader from "../../components/MenuHeader";
+import Layout from "./../../components/Layout/index";
 
 const HomePage = () => {
-  return (
-    <div>
-      <Header />
-      <MenuHeader />
-    </div>
-  );
+  return <Layout>HomePage</Layout>;
 };
 
 export default HomePage;
