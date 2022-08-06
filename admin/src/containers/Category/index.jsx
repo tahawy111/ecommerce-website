@@ -1,20 +1,25 @@
 import Layout from "./../../components/Layout/index";
 import "./style.css";
-// import { NavLink } from "react-router-dom";
 import { Container, Row, Col, Button, Alert } from "react-bootstrap";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import Input from "./../../components/UI/Input/index";
-
+import CheckboxTree from "react-checkbox-tree";
+import "react-checkbox-tree/lib/react-checkbox-tree.css";
 import NewModal from "../../components/UI/Modal";
 import { addCategory } from "../../actions/category.actions";
+import { IoCheckbox, IoCheckboxOutline } from "react-icons/io5";
+import { ImCheckboxUnchecked } from "react-icons/im";
+import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
+import { FcFolder, FcOpenedFolder, FcCollapse, FcFile } from "react-icons/fc";
 
 const Category = () => {
   const categories = useSelector((state) => state.category);
   const dispatch = useDispatch();
 
   const [show, setShow] = useState(false);
+  const [checked, setChecked] = useState([]);
+  const [expanded, setExpanded] = useState([]);
   const handleClose = async () => {
     const form = new FormData();
 
@@ -35,14 +40,12 @@ const Category = () => {
     let myCategories = [];
 
     for (let category of categories) {
-      myCategories.push(
-        <li key={category.name}>
-          {category.name}
-          {category.children.length > 0 ? (
-            <ul>{renderCategories(category.children)}</ul>
-          ) : null}
-        </li>
-      );
+      myCategories.push({
+        label: category.name,
+        value: category._id,
+        children:
+          category.children.length > 0 && renderCategories(category.children),
+      });
     }
     return myCategories;
   };
@@ -79,7 +82,25 @@ const Category = () => {
         </Row>
         <Row>
           <Col md={12}>
-            <ul>{renderCategories(categories.categories)}</ul>
+            <CheckboxTree
+              nodes={renderCategories(categories.categories)}
+              checked={checked}
+              expanded={expanded}
+              onCheck={(checked) => setChecked(checked)}
+              onExpand={(expanded) => setExpanded(expanded)}
+              icons={{
+                check: <IoCheckbox />,
+                uncheck: <ImCheckboxUnchecked />,
+                halfCheck: <IoCheckboxOutline />,
+                expandClose: <IoIosArrowForward />,
+                expandOpen: <IoIosArrowDown />,
+                expandAll: <IoIosArrowDown />,
+                collapseAll: <FcCollapse />,
+                parentClose: <FcFolder />,
+                parentOpen: <FcOpenedFolder />,
+                leaf: <FcFile />,
+              }}
+            />
           </Col>
         </Row>
       </Container>
