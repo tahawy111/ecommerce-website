@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const User = require("../../models/User");
 const jwt = require("jsonwebtoken");
+const shortId = require("shortid");
 
 exports.signup = async (req, res) => {
   if (await User.findOne({ email: req.body.email }))
@@ -16,7 +17,7 @@ exports.signup = async (req, res) => {
     fullName,
     email,
     hash_password: await bcrypt.hash(password, 10),
-    username: Math.random().toString(),
+    username: shortId.generate(),
     role: "admin",
   });
 
