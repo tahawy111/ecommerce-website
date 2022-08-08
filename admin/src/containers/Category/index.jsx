@@ -14,6 +14,7 @@ import { IoIosArrowForward, IoIosArrowDown, IoMdTrash } from "react-icons/io";
 import { FcFolder, FcOpenedFolder, FcCollapse, FcFile } from "react-icons/fc";
 import { GoPencil } from "react-icons/go";
 import { BsPlusLg } from "react-icons/bs";
+import { AiOutlineCheckSquare } from "react-icons/ai";
 
 const Category = () => {
   const categories = useSelector((state) => state.category);
@@ -71,6 +72,7 @@ const Category = () => {
 
   const updateCategory = () => {
     setUpdateCategoryModal(true);
+    console.log({ checked, expanded });
   };
 
   return (
@@ -104,7 +106,7 @@ const Category = () => {
               icons={{
                 check: <IoCheckbox />,
                 uncheck: <ImCheckboxUnchecked />,
-                halfCheck: <IoCheckbox />,
+                halfCheck: <AiOutlineCheckSquare />,
                 expandClose: <IoIosArrowForward />,
                 expandOpen: <IoIosArrowDown />,
                 expandAll: <IoIosArrowDown />,
@@ -183,9 +185,9 @@ const Category = () => {
       {/* Edit Categories */}
       <NewModal
         show={updateCategoryModal}
-        handleHide={updateCategory}
+        handleHide={() => setUpdateCategoryModal(false)}
         modalTitle="Update Category"
-        handleClose={() => setUpdateCategoryModal(true)}
+        handleClose={updateCategory}
         submitTitle="Update Category"
         size="lg"
       >
