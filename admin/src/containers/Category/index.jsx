@@ -348,6 +348,7 @@ const Category = () => {
                 </select>
               </Col>
               {/* <Input
+              
                 type="file"
                 placeholder={"Enter Category Image"}
                 onChange={handleCategoryImage}
