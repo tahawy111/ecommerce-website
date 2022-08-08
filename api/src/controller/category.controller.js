@@ -53,3 +53,23 @@ exports.getCategories = async (req, res) => {
     res.status(400).json({ error });
   }
 };
+
+exports.updateCategories = async (req, res) => {
+  const { name, parentId, type } = req.body;
+
+  if (name instanceof Array) {
+    for (let i = 0; i < name.length; i++) {
+      const category = {
+        name: name[i],
+        type: type[i],
+      };
+
+      if (parentId !== "") {
+        category.parentId = parentId[i];
+      }
+    }
+  } else {
+  }
+
+  res.status(200).json({ body: req.body });
+};

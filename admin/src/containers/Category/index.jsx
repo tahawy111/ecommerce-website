@@ -298,7 +298,7 @@ const Category = () => {
           ))}
         <Row>
           <Col>
-            <h6>Checked</h6>
+            <h6>Checked Categories</h6>
           </Col>
         </Row>
         {checkedArray.length > 0 &&

@@ -2,6 +2,7 @@ const { requireSignin, adminMiddlewere } = require("../common-middlewere");
 const {
   createCategory,
   getCategories,
+  updateCategories,
 } = require("../controller/category.controller");
 const router = require("express").Router();
 
@@ -29,5 +30,12 @@ router.post(
   createCategory
 );
 router.get("/category/getCategory", getCategories);
+router.post(
+  "/category/update",
+  requireSignin,
+  adminMiddlewere,
+  upload.array("categoryImage"),
+  updateCategories
+);
 
 module.exports = router;
