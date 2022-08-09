@@ -37,7 +37,6 @@ export const deleteCategories = (ids) => {
       payload: { ids },
     });
     if (res.status === 201) {
-      console.log(res);
       dispatch(fetchCategory());
     } else {
       console.log(res);
