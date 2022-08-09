@@ -3,6 +3,7 @@ const {
   createCategory,
   getCategories,
   updateCategories,
+  deleteCategories,
 } = require("../controller/category.controller");
 const router = require("express").Router();
 
@@ -36,6 +37,12 @@ router.post(
   adminMiddlewere,
   upload.array("categoryImage"),
   updateCategories
+);
+router.post(
+  "/category/delete",
+  requireSignin,
+  adminMiddlewere,
+  deleteCategories
 );
 
 module.exports = router;

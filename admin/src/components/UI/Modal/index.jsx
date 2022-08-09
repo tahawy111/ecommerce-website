@@ -15,6 +15,14 @@ const NewModal = (props) => {
               {props.submitTitle}
             </Button>
           )}
+
+          {!props.submitTitle &&
+            props.buttons &&
+            props.buttons.map((btn, index) => (
+              <Button key={index} variant={btn.color} onClick={btn.onClick}>
+                {btn.label}
+              </Button>
+            ))}
         </Modal.Footer>
       </Modal>
     </div>
