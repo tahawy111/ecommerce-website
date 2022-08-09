@@ -8,12 +8,16 @@ import axiosIntance from "./../helpers/axios";
 
 export const addCategory = async (dispatch, form) => {
   dispatch(addNewCategoryRequest());
-  const res = await axiosIntance.post("/category/create", form);
-  if (res.status === 201) {
-    dispatch(addNewCategorySuccess(res.data.category));
-    dispatch(fetchCategory());
-  } else {
-    dispatch(addNewCategoryFailure(res.data.error));
+  try {
+    const res = await axiosIntance.post("/category/create", form);
+    if (res.status === 201) {
+      dispatch(addNewCategorySuccess(res.data.category));
+      dispatch(fetchCategory());
+    } else {
+      dispatch(addNewCategoryFailure(res.data.error));
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
 
