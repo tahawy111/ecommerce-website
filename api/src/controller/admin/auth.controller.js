@@ -42,7 +42,7 @@ exports.signin = async (req, res) => {
         { _id: user._id, role: user.role },
         process.env.JWT_SECRET,
         {
-          expiresIn: "3d",
+          expiresIn: "2m",
         }
       );
       const { firstName, lastName, email, role, fullName, _id } = user;
