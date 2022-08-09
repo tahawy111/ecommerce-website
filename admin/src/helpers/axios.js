@@ -26,7 +26,6 @@ axiosIntance.interceptors.response.use(
     console.log(error);
     const { status } = error.response;
     if (status === 500 || status === 400) {
-      localStorage.clear();
       store.dispatch(logoutSuccess());
     }
     return Promise.reject(error.response);

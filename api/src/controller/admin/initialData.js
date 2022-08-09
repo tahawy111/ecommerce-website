@@ -1,5 +1,6 @@
 const Category = require("../../models/Category");
 const Product = require("../../models/Product");
+const jwt = require("jsonwebtoken");
 
 function createCategories(categories, parentId = null) {
   const categoryList = [];
@@ -23,9 +24,23 @@ function createCategories(categories, parentId = null) {
 }
 
 exports.initialData = async (req, res) => {
-  const categories = await Category.find();
-  const products = await Product.find()
-    .select("_id name slug price quantity description productPictures category")
-    .populate({ path: "category", select: "_id name" });
-  res.status(200).json({ products, categories: createCategories(categories) });
+  const { token } = req.params;
+  try {
+    const vtoken = jwt.verify(token, process.env.JWT_SECRET);
+    const categories = await Category.find();
+    const products = await Product.find()
+      .select(
+        "_id name slug price quantity description productPictures category"
+      )
+      .populate({ path: "category", select: "_id name" });
+    res.status(200).json({
+      products,
+      categories: createCategories(categories),
+      logout: "Not Required",
+    });
+  } catch (error) {
+    res.status(400).json({
+      logout: "Required",
+    });
+  }
 };
