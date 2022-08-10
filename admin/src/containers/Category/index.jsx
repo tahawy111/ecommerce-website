@@ -351,8 +351,10 @@ const Category = () => {
 
     const idsArray = expandedIdsArray.concat(checkedIdsArray);
 
-    dispatch(deleteCategoriesAction(idsArray));
-    setDeleteCategoryModal(false);
+    if (checkedIdsArray.length > 0) {
+      dispatch(deleteCategoriesAction(checkedIdsArray));
+      setDeleteCategoryModal(false);
+    }
   };
 
   const renderDeleteCategoryModal = () => {
