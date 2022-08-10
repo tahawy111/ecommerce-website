@@ -3,7 +3,6 @@ import "./style.css";
 import { Container, Row, Col, Button, Alert } from "react-bootstrap";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Input from "./../../components/UI/Input/index";
 import CheckboxTree from "react-checkbox-tree";
 import "react-checkbox-tree/lib/react-checkbox-tree.css";
 import NewModal from "../../components/UI/Modal";
@@ -21,6 +20,7 @@ import { BsPlusLg } from "react-icons/bs";
 import { AiOutlineCheckSquare } from "react-icons/ai";
 import UpdateCategoryModal from "./components/UpdateCategoryModal";
 import AddCategoryModal from "./components/AddCategoryModal";
+import "./style.css";
 
 const Category = () => {
   const categories = useSelector((state) => state.category);
@@ -41,6 +41,10 @@ const Category = () => {
   const handleClose = async () => {
     const form = new FormData();
 
+    if (categoryName === "") {
+      alert("Name is Required");
+      return;
+    }
     form.append("name", categoryName);
     form.append("parentId", parentCategoryId);
     form.append("categoryImage", categoryImage);
@@ -224,13 +228,48 @@ const Category = () => {
             <div className="d-flex justify-content-between">
               <h3>Category</h3>
 
-              <Button
-                variant="success"
-                className="mt-3 fs-5 d-flex align-items-center"
-                onClick={handleShow}
-              >
-                <BsPlusLg />
-              </Button>
+              <div style={{ display: "flex" }}>
+                <Button
+                  variant="danger"
+                  className="mt-3"
+                  onClick={deleteCategory}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    fontSize: "1.5rem",
+                    marginRight: "1rem",
+                  }}
+                >
+                  <IoMdTrash />
+                </Button>
+                <Button
+                  variant="warning"
+                  className="mt-3"
+                  onClick={updateCategory}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    fontSize: "1.5rem",
+                    marginRight: "1rem",
+                    color: "white",
+                  }}
+                >
+                  <GoPencil />
+                </Button>
+                <Button
+                  variant="success"
+                  className="mt-3"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    fontSize: "1.5rem",
+                    marginRight: "1rem",
+                  }}
+                  onClick={handleShow}
+                >
+                  <BsPlusLg />
+                </Button>
+              </div>
             </div>
           </Col>
         </Row>
@@ -258,32 +297,7 @@ const Category = () => {
           </Col>
         </Row>
         <Row>
-          <Col className="mt-3 d-flex">
-            <Button
-              variant="danger"
-              onClick={deleteCategory}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                fontSize: "1.5rem",
-                marginRight: "1rem",
-              }}
-            >
-              <IoMdTrash />
-            </Button>
-            <Button
-              variant="warning"
-              onClick={updateCategory}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                fontSize: "1.5rem",
-                color: "white",
-              }}
-            >
-              <GoPencil />
-            </Button>
-          </Col>
+          <Col className="mt-3 d-flex"></Col>
         </Row>
       </Container>
 

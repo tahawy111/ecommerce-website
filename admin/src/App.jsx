@@ -5,12 +5,10 @@ import Signin from "./containers/Signin";
 import Signup from "./containers/Signup";
 import Products from "./containers/Products";
 import Orders from "./containers/Orders";
-
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { isUserLoggedIn } from "./actions/auth.actions";
 import Category from "./containers/Category";
-// import { fetchCategory } from "./slices/categorySlice";
 import { getInitialData } from "./actions/initialData.actions";
 
 function App() {
