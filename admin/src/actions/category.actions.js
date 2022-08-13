@@ -2,6 +2,9 @@ import {
   addNewCategoryFailure,
   addNewCategoryRequest,
   addNewCategorySuccess,
+  deleteCategoryFailure,
+  deleteCategoryRequest,
+  deleteCategorySuccess,
   fetchCategory,
   updateCategoryFailure,
   updateCategoryRequest,
@@ -40,13 +43,16 @@ export const updateCategories = (form) => {
 
 export const deleteCategories = (ids) => {
   return async (dispatch) => {
+    dispatch(deleteCategoryRequest());
     const res = await axiosIntance.post("/category/delete", {
       payload: { ids },
     });
     if (res.status === 201) {
+      dispatch(deleteCategorySuccess());
       dispatch(fetchCategory());
     } else {
-      console.log(res);
+      const { error } = res.data;
+      dispatch(deleteCategoryFailure({ error }));
     }
   };
 };

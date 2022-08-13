@@ -179,9 +179,7 @@ const Category = () => {
           {
             label: "No",
             color: "primary",
-            onClick: () => {
-              alert("No");
-            },
+            onClick: () => setDeleteCategoryModal(false),
           },
           {
             label: "Yes",
