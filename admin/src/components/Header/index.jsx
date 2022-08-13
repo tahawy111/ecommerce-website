@@ -2,6 +2,7 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Link } from "react-router-dom";
 import axiosIntance from "./../../helpers/axios";
+import { FaSignOutAlt } from "react-icons/fa";
 const {
   logoutSuccess,
   logoutRequest,
@@ -34,7 +35,7 @@ const Header = () => {
           style={{ cursor: "pointer" }}
           onClick={logout}
         >
-          Signout
+          <FaSignOutAlt className="fs-4" />
         </span>
       </Nav>
     );
