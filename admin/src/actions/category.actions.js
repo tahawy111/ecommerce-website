@@ -3,6 +3,9 @@ import {
   addNewCategoryRequest,
   addNewCategorySuccess,
   fetchCategory,
+  updateCategoryFailure,
+  updateCategoryRequest,
+  updateCategorySuccess,
 } from "../slices/categorySlice";
 import axiosIntance from "./../helpers/axios";
 
@@ -23,10 +26,14 @@ export const addCategory = async (dispatch, form) => {
 
 export const updateCategories = (form) => {
   return async (dispatch) => {
+    dispatch(updateCategoryRequest());
     const res = await axiosIntance.post("/category/update", form);
     if (res.status === 201) {
+      dispatch(updateCategorySuccess());
       dispatch(fetchCategory());
     } else {
+      const { error } = res.data;
+      dispatch(updateCategoryFailure({ error }));
     }
   };
 };

@@ -78,6 +78,15 @@ export const categorySlice = createSlice({
     addNewCategoryFailure: (state, action) => {
       return { ...state, loading: false, error: action.payload };
     },
+    updateCategoryRequest: (state) => {
+      return { ...state, loading: true };
+    },
+    updateCategorySuccess: (state) => {
+      return { ...state, loading: false };
+    },
+    updateCategoryFailure: (state, action) => {
+      return { ...state, loading: false, error: action.payload.error };
+    },
   },
 });
 
@@ -87,6 +96,9 @@ export const {
   addNewCategoryFailure,
   getAllCategoriesSuccess,
   getAllCategoriesRequest,
+  updateCategoryRequest,
+  updateCategorySuccess,
+  updateCategoryFailure,
 } = categorySlice.actions;
 
 export default categorySlice.reducer;
