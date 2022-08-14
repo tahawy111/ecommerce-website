@@ -66,6 +66,7 @@ const UpdateCategoryModal = (props) => {
             <Col>
               <select
                 className="form-control"
+                value={item.type}
                 onChange={(e) =>
                   handleCategoryInput("type", e.target.value, index, "expanded")
                 }
@@ -93,6 +94,7 @@ const UpdateCategoryModal = (props) => {
       {checkedArray.length > 0 &&
         checkedArray.map((item, index) => (
           <Row key={index}>
+            {console.log(item)}
             <Col>
               <Input
                 value={item.name}
@@ -126,6 +128,7 @@ const UpdateCategoryModal = (props) => {
             <Col>
               <select
                 className="form-control"
+                value={item.type}
                 onChange={(e) =>
                   handleCategoryInput("type", e.target.value, index, "checked")
                 }

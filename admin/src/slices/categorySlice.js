@@ -8,7 +8,7 @@ const initialState = {
 // https://youtu.be/I2aM7YcOXDY
 export const fetchCategory = createAsyncThunk(
   "category/fetchCategory",
-  async (id = null, { rejectWithValue }) => {
+  async (arg = null, { rejectWithValue }) => {
     try {
       const res = await axiosIntance.get("/category/getCategory");
       return res.data.categoryList;
