@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { isUserLoggedIn } from "./actions/auth.actions";
 import Category from "./containers/Category";
 import { getInitialData } from "./actions/initialData.actions";
+import NewPage from "./containers/NewPage/index";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -26,6 +27,10 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={token ? <Home /> : <Navigate to="/signin" />} />
+      <Route
+        path="/page"
+        element={token ? <NewPage /> : <Navigate to="/signin" />}
+      />
       <Route
         path="/products"
         element={token ? <Products /> : <Navigate to="/signin" />}

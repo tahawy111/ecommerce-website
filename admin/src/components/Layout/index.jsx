@@ -14,6 +14,9 @@ const Layout = (props) => {
               <NavLink to="/" className="nav-link">
                 Home
               </NavLink>
+              <NavLink to="/page" className="nav-link">
+                Page
+              </NavLink>
               <NavLink to="/category" className="nav-link">
                 Category
               </NavLink>
