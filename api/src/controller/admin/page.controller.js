@@ -25,6 +25,6 @@ exports.createPage = async (req, res) => {
     const page = await newPage.save();
     return res.status(201).json({ page });
   } catch (error) {
-    return res.status(400).json({ error });
+    return res.status(400).json({ error: "Something went wrong" });
   }
 };

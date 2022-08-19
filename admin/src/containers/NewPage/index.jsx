@@ -3,11 +3,14 @@ import Layout from "./../../components/Layout/index";
 import NewModal from "./../../components/UI/Modal/index";
 import { Button, Col, Row } from "react-bootstrap";
 import Input from "./../../components/UI/Input/index";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import linearCategories from "../../helpers/linearCategories";
+import { createPage } from "../../actions/page.action";
 
 const NewPage = () => {
   const category = useSelector((state) => state.category);
+  const dispatch = useDispatch();
+  // useStates
   const [craeteModal, setCreateModal] = useState(false);
   const [title, setTitle] = useState("");
   const [categoryId, setCategoryId] = useState("");
@@ -16,6 +19,7 @@ const NewPage = () => {
   const [categories, setCategories] = useState([]);
   const [banners, setBanners] = useState([]);
   const [products, setProducts] = useState([]);
+
   const handleBannerImages = (e) => {
     setBanners([...banners, e.target.files[0]]);
   };
@@ -49,7 +53,7 @@ const NewPage = () => {
     });
 
     console.log({ title, desc, categoryId, type, banners, products });
-
+    dispatch(createPage(form));
     setCreateModal(false);
   };
 

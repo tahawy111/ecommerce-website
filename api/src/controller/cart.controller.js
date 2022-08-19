@@ -1,4 +1,4 @@
-const Cart = require('../models/Cart');
+const Cart = require("../models/Cart");
 
 exports.addItemToCart = async (req, res) => {
   try {
@@ -30,10 +30,10 @@ exports.addItemToCart = async (req, res) => {
         cart.totalPrice +=
           +req.body.cartItems.price * +req.body.cartItems.quantity;
 
-        condition = { user: req.user._id, 'cartItems.product': product };
+        condition = { user: req.user._id, "cartItems.product": product };
         action = { $set: cart };
         const updatedCart = await Cart.findOneAndUpdate(
-          { user: req.user._id, 'cartItems.product': product },
+          { user: req.user._id, "cartItems.product": product },
           {
             $set: cart,
           }
