@@ -7,14 +7,14 @@ import { useSelector } from "react-redux";
 import linearCategories from "../../helpers/linearCategories";
 
 const NewPage = () => {
+  const category = useSelector((state) => state.category);
   const [craeteModal, setCreateModal] = useState(false);
   const [title, setTitle] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [desc, setDesc] = useState("");
-  const category = useSelector((state) => state.category);
+  const [type, setType] = useState("");
   const [categories, setCategories] = useState([]);
   const [banners, setBanners] = useState([]);
-  console.log(banners);
   const [products, setProducts] = useState([]);
   const handleBannerImages = (e) => {
     setBanners([...banners, e.target.files[0]]);
@@ -32,10 +32,34 @@ const NewPage = () => {
 
     const form = new FormData();
 
+    if (title === "") {
+      alert("Title is Required");
+      return;
+    }
+
     form.append("title", title);
-    form.append("title", title);
+    form.append("description", desc);
+    form.append("category", categoryId);
+    form.append("type", type);
+    banners.forEach((banner, index) => {
+      form.append("banners", banner);
+    });
+    products.forEach((product, index) => {
+      form.append("products", product);
+    });
+
+    console.log({ title, desc, categoryId, type, banners, products });
 
     setCreateModal(false);
+  };
+
+  const onCategoryChange = (e) => {
+    const categoryf = categories.find(
+      (category) => category.value === e.target.value
+    );
+
+    setCategoryId(e.target.value);
+    setType(categoryf.type);
   };
 
   const renderCreatePageModal = () => {
@@ -52,7 +76,8 @@ const NewPage = () => {
             <select
               className="form-control mb-3"
               value={categoryId}
-              onChange={(e) => setCategoryId(e.target.value)}
+              onChange={onCategoryChange}
+              // onChange={(e) => setCategoryId(e.target.value)}
             >
               <option value="">Select Category</option>
               {categories.map((cat) => (
@@ -89,7 +114,7 @@ const NewPage = () => {
 
         {banners.length > 0
           ? banners.map((banner, index) => (
-              <Row>
+              <Row key={index}>
                 <Col>{banner.name}</Col>
               </Row>
             ))
@@ -106,7 +131,7 @@ const NewPage = () => {
         </Row>
         {products.length > 0
           ? products.map((product, index) => (
-              <Row>
+              <Row key={index}>
                 <Col>{product.name}</Col>
               </Row>
             ))
