@@ -115,8 +115,6 @@ const Category = () => {
     setExpandedArray(expandedArray);
   };
 
-  console.log(checkedArray);
-
   const handleCategoryInput = (key, value, index, type) => {
     if (type === "checked") {
       const updatedCheckedArray = checkedArray.map((item, _index) =>
