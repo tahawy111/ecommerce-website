@@ -11,6 +11,8 @@ import { isUserLoggedIn } from "./actions/auth.actions";
 import Category from "./containers/Category";
 import { getInitialData } from "./actions/initialData.actions";
 import NewPage from "./containers/NewPage/index";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -18,11 +20,19 @@ function App() {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (auth.authenticate) {
+    if (!auth.authenticate) {
       isUserLoggedIn(dispatch);
     }
-    getInitialData(dispatch);
-  }, [dispatch, auth.authenticate]);
+    if (auth.authenticate) {
+      getInitialData(dispatch);
+    }
+  }, [dispatch, auth.authenticate, auth.user.fullName]);
+
+  useEffect(() => {
+    if (auth.authenticate) {
+      toast.success(`Hi ${auth.user.fullName}!`);
+    }
+  }, [auth]);
 
   return (
     <Routes>
