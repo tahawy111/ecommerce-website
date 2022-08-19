@@ -5,7 +5,7 @@ const shortId = require("shortid");
 
 exports.signup = async (req, res) => {
   if (await User.findOne({ email: req.body.email }))
-    res.status(400).json({ message: "Email already registered" });
+    return res.status(400).json({ message: "Email already registered" });
 
   const { firstName, lastName, email, password } = req.body;
 
@@ -23,7 +23,7 @@ exports.signup = async (req, res) => {
 
   try {
     const user = await _user.save();
-    res.status(201).json({ message: "Admin created successfully..!" });
+    return res.status(201).json({ message: "Admin created successfully..!" });
   } catch (error) {
     return res.status(400).json({ message: "Something went wrong" });
   }
@@ -32,7 +32,9 @@ exports.signup = async (req, res) => {
 exports.signin = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
-    !user && res.status(400).json({ message: "User not found" });
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
 
     if (
       (await bcrypt.compare(req.body.password, user.hash_password)) &&
@@ -54,7 +56,7 @@ exports.signin = async (req, res) => {
         user: { _id, firstName, lastName, email, role, fullName },
       });
     } else {
-      res.status(400).json({ message: "Invalid password" });
+      return res.status(400).json({ message: "Invalid password" });
     }
   } catch (error) {
     res.status(400).json({ error });

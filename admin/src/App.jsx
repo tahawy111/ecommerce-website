@@ -11,7 +11,7 @@ import { isUserLoggedIn } from "./actions/auth.actions";
 import Category from "./containers/Category";
 import { getInitialData } from "./actions/initialData.actions";
 import NewPage from "./containers/NewPage/index";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {

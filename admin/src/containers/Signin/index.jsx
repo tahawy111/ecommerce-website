@@ -10,6 +10,7 @@ import {
 } from "../../slices/authSlice";
 import axiosIntance from "../../helpers/axios";
 import { Navigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
@@ -20,6 +21,7 @@ const Signin = () => {
 
   const userLogin = async (e) => {
     e.preventDefault();
+
     const tookUser = { email, password };
 
     dispatch(loginRequest(tookUser));
@@ -35,6 +37,7 @@ const Signin = () => {
       dispatch(loginSuccess({ token, user }));
     } catch (error) {
       dispatch(loginFailure(error.data));
+      toast.error(error.data.message);
     }
   };
 
