@@ -10,4 +10,6 @@ module.exports = (app) => {
   app.use("/api", require("./cart"));
   // initialData
   app.use("/api", require("./admin/initialData"));
+  // Page
+  app.use("/api", require("./admin/page"));
 };
