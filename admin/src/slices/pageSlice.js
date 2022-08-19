@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   error: null,
-  message: false,
   loading: false,
+  page: null,
 };
 
 export const pageSlice = createSlice({
@@ -14,11 +14,11 @@ export const pageSlice = createSlice({
     },
 
     createPageSuccess: (state, action) => {
-      return { ...state, loading: false, message: action.payload.message };
+      return { ...state, loading: false, page: action.payload.page };
     },
 
     createPageFailure: (state, action) => {
-      return { ...state, loading: false, message: action.payload.error };
+      return { ...state, loading: false, error: action.payload.error };
     },
   },
 });
