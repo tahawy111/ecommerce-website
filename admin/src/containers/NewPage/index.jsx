@@ -13,11 +13,30 @@ const NewPage = () => {
   const [desc, setDesc] = useState("");
   const category = useSelector((state) => state.category);
   const [categories, setCategories] = useState([]);
-  const handleBannersImages = () => {};
+  const [banners, setBanners] = useState([]);
+  console.log(banners);
+  const [products, setProducts] = useState([]);
+  const handleBannerImages = (e) => {
+    setBanners([...banners, e.target.files[0]]);
+  };
+  const handleProductImages = (e) => {
+    setProducts([...products, e.target.files[0]]);
+  };
 
   useEffect(() => {
     setCategories(linearCategories(category.categories));
   }, [category]);
+
+  const submitPageForm = (e) => {
+    e.preventDefault();
+
+    const form = new FormData();
+
+    form.append("title", title);
+    form.append("title", title);
+
+    setCreateModal(false);
+  };
 
   const renderCreatePageModal = () => {
     return (
@@ -25,7 +44,7 @@ const NewPage = () => {
         show={craeteModal}
         handleHide={() => setCreateModal(false)}
         modalTitle="Create New Page"
-        handleClose={() => setCreateModal(false)}
+        handleClose={submitPageForm}
         submitTitle="Create"
       >
         <Row>
@@ -68,23 +87,37 @@ const NewPage = () => {
           </Col>
         </Row>
 
+        {banners.length > 0
+          ? banners.map((banner, index) => (
+              <Row>
+                <Col>{banner.name}</Col>
+              </Row>
+            ))
+          : null}
         <Row>
           <Col>
             <Input
               type="file"
               label="Banners"
               name="banners"
-              onChange={handleBannersImages}
+              onChange={handleBannerImages}
             />
           </Col>
         </Row>
+        {products.length > 0
+          ? products.map((product, index) => (
+              <Row>
+                <Col>{product.name}</Col>
+              </Row>
+            ))
+          : null}
         <Row>
           <Col>
             <Input
               type="file"
               label="Products"
               name="products"
-              onChange={handleBannersImages}
+              onChange={handleProductImages}
             />
           </Col>
         </Row>
