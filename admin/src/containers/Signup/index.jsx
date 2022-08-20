@@ -23,22 +23,41 @@ const Signup = () => {
   const userSignup = async (e) => {
     e.preventDefault();
 
-    // if (password !== confirmPassword) {
-    //   toast.error("Passwords do not matches!");
-    // }
-    // if (!confirmPassword) {
-    //   toast.error("Please Confirm Password");
-    // }
+    if (
+      firstName &&
+      lastName &&
+      email &&
+      password &&
+      confirmPassword &&
+      password !== confirmPassword
+    ) {
+      toast.error("Passwords do not matches!");
+    }
+    if (firstName && lastName && email && password && !confirmPassword) {
+      toast.error("Please Confirm Password");
+    }
 
     const tookUser = { firstName, lastName, email, password };
     dispatch(registerRequest(tookUser));
 
     try {
-      const { data } = await axiosIntance.post("/admin/signup", tookUser);
-      dispatch(registerSuccess({ data }));
+      const { data, status } = await axiosIntance.post(
+        "/admin/signup",
+        tookUser
+      );
+      if (status === 201) {
+        dispatch(registerSuccess({ data }));
+        toast.success("Account Created Successfully");
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+        toast.success("Go And Signin");
+      }
     } catch (error) {
       dispatch(registerFailure({ error }));
-      toast.error(error.data.error);
+      toast.error(error.data.error || error.data.message);
     }
   };
 
