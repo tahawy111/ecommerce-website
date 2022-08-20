@@ -6,9 +6,11 @@ import Input from "./../../components/UI/Input/index";
 import { useDispatch, useSelector } from "react-redux";
 import linearCategories from "../../helpers/linearCategories";
 import { createPage } from "../../actions/page.action";
+import { toast } from "react-toastify";
 
 const NewPage = () => {
   const category = useSelector((state) => state.category);
+  const page = useSelector((state) => state.page);
   const dispatch = useDispatch();
   // useStates
   const [craeteModal, setCreateModal] = useState(false);
@@ -30,6 +32,17 @@ const NewPage = () => {
   useEffect(() => {
     setCategories(linearCategories(category.categories));
   }, [category]);
+  useEffect(() => {
+    if (!page.loading) {
+      setCreateModal("");
+      setTitle("");
+      setCategoryId("");
+      setDesc("");
+      setType("");
+      setBanners([]);
+      setProducts([]);
+    }
+  }, []);
 
   const submitPageForm = (e) => {
     e.preventDefault();
@@ -37,7 +50,7 @@ const NewPage = () => {
     const form = new FormData();
 
     if (title === "") {
-      alert("Title is Required");
+      toast.warning("Title is Required");
       return;
     }
 

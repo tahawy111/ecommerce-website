@@ -42,7 +42,7 @@ const Category = () => {
     const form = new FormData();
 
     if (categoryName === "") {
-      alert("Name is Required");
+      alert("Category Name Is Required");
       return;
     }
     form.append("name", categoryName);
