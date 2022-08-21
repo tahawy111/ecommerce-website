@@ -21,6 +21,7 @@ const pageSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "categorie",
       required: true,
+      unique: true,
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
