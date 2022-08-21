@@ -10,44 +10,43 @@ import { generatePublicUrl } from "../../helpers/api";
 const ProductListPage = () => {
   const { slug } = useParams();
   const productss = useSelector((state) => state.product);
-  const [products, setProducts] = useState("");
+  const [products, setProducts] = useState({});
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProductBySlug(slug));
+    setProducts(productss);
   }, [dispatch, slug]);
 
-  console.log(products.productsByPrice);
+  console.log(products);
 
   return (
     <Layout>
-      {products.productsByPrice.length > 0
-        ? products.productsByPrice.map((product, index) => (
-            <div className="card" key="index">
-              <div className="cardHeader">
-                <div>Label</div>
-                <button className="cardBtn">View All</button>
+      {/* {products.productsByPrice.map((product, index) => (
+        <div className="card" key="index">
+          <div className="cardHeader">
+            <div>Label</div>
+            <button className="cardBtn">View All</button>
+          </div>
+          <div style={{ display: "flex" }}>
+            <div className="productContainer">
+              <div className="productImgContainer">
+                <img
+                  src="../../-AopznEa9T-apple-iphone-12-dummyapplefsn-original-imafwg8dqq7z8cgh(1).webp"
+                  alt=""
+                />
               </div>
-              <div style={{ display: "flex" }}>
-                <div className="productContainer">
-                  <div className="productImgContainer">
-                    <img
-                      src="../../-AopznEa9T-apple-iphone-12-dummyapplefsn-original-imafwg8dqq7z8cgh(1).webp"
-                      alt=""
-                    />
-                  </div>
-                  <div className="productInfo">
-                    <div style={{ margin: "5px 0" }}>product name</div>
-                    <div>
-                      <span>4.3</span>
-                      <span> (5254)</span>
-                    </div>
-                    <div className="productPrice">50000$</div>
-                  </div>
+              <div className="productInfo">
+                <div style={{ margin: "5px 0" }}>product name</div>
+                <div>
+                  <span>4.3</span>
+                  <span> (5254)</span>
                 </div>
+                <div className="productPrice">50000$</div>
               </div>
             </div>
-          ))
-        : null}
+          </div>
+        </div>
+      ))} */}
 
       {/* {products.productsByPrice.map((product, index) => (
         <div className="card" key={index}>
