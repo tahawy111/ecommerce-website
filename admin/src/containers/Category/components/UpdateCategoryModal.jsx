@@ -43,8 +43,8 @@ const UpdateCategoryModal = (props) => {
               />
             </Col>
             <Col>
-              <select
-                className="form-control mb-2"
+              {/* Select */}
+              <Input
                 value={item.parentId}
                 onChange={(e) =>
                   handleCategoryInput(
@@ -54,14 +54,10 @@ const UpdateCategoryModal = (props) => {
                     "expanded"
                   )
                 }
-              >
-                <option defaultValue>Select Category</option>
-                {createCategoryList.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.name}
-                  </option>
-                ))}
-              </select>
+                label="Select Category"
+                options={createCategoryList}
+                type="select"
+              />
             </Col>
             <Col>
               <select
@@ -105,8 +101,7 @@ const UpdateCategoryModal = (props) => {
               />
             </Col>
             <Col>
-              <select
-                className="form-control mb-2"
+              <Input
                 value={item.parentId}
                 onChange={(e) =>
                   handleCategoryInput(
@@ -116,14 +111,10 @@ const UpdateCategoryModal = (props) => {
                     "checked"
                   )
                 }
-              >
-                <option defaultValue>Select Category</option>
-                {createCategoryList.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.name}
-                  </option>
-                ))}
-              </select>
+                label="Select Category"
+                options={createCategoryList}
+                type="select"
+              />
             </Col>
             <Col>
               <select

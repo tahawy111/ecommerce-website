@@ -31,18 +31,15 @@ const AddCategoryModal = (props) => {
         label="Category Name"
       />
 
-      <select
-        className="form-control mb-2"
+      {/* Select */}
+      <Input
         value={parentCategoryId}
         onChange={setParentCategoryId}
-      >
-        <option defaultValue>Select Category</option>
-        {createCategoryList.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.name}
-          </option>
-        ))}
-      </select>
+        label="Select Category"
+        options={createCategoryList}
+        type="select"
+      />
+
       <Input
         type="file"
         placeholder={"Enter Category Image"}

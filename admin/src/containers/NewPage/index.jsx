@@ -66,7 +66,9 @@ const NewPage = () => {
     });
 
     console.log({ title, desc, categoryId, type, banners, products });
-    dispatch(createPage(form));
+    dispatch(createPage(form)).then(() => {
+      toast.success("Page Created Sucessfully");
+    });
     setCreateModal(false);
   };
 
@@ -90,19 +92,14 @@ const NewPage = () => {
       >
         <Row>
           <Col>
-            <select
-              className="form-control mb-3"
+            {/* Select */}
+            <Input
               value={categoryId}
               onChange={onCategoryChange}
-              // onChange={(e) => setCategoryId(e.target.value)}
-            >
-              <option value="">Select Category</option>
-              {categories.map((cat) => (
-                <option key={cat.value} value={cat.value}>
-                  {cat.name}
-                </option>
-              ))}
-            </select>
+              label="Select Category"
+              options={categories}
+              type="select"
+            />
           </Col>
         </Row>
         <Row>
