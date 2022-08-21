@@ -13,3 +13,14 @@ export const getProductBySlug = (slug) => {
     }
   };
 };
+export const getProductPage = (payload) => {
+  return async (dispatch) => {
+    const { cid, type } = payload;
+
+    const res = await axiosIntance.get(`products/${cid}/${type}`);
+    console.log(res);
+
+    if (res.status === 200) {
+    }
+  };
+};

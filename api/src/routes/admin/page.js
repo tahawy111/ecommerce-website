@@ -4,7 +4,10 @@ const {
   requireSignin,
   adminMiddlewere,
 } = require("../../common-middlewere");
-const { createPage } = require("../../controller/admin/page.controller");
+const {
+  createPage,
+  getPage,
+} = require("../../controller/admin/page.controller");
 
 router.post(
   "/page/create",
@@ -13,5 +16,6 @@ router.post(
   upload.fields([{ name: "banners" }, { name: "products" }]),
   createPage
 );
+router.post("/page/:category/:type", getPage);
 
 module.exports = router;

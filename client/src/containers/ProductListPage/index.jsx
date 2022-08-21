@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Layout from "./../../components/Layout/index";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductBySlug } from "./../../actions/product.actions";
@@ -9,24 +9,54 @@ import { generatePublicUrl } from "../../helpers/api";
 
 const ProductListPage = () => {
   const { slug } = useParams();
-  const product = useSelector((state) => state.product);
+  const productss = useSelector((state) => state.product);
+  const [products, setProducts] = useState("");
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProductBySlug(slug));
   }, [dispatch, slug]);
 
-  const keys = Object.keys(product.productsByPrice);
+  console.log(products.productsByPrice);
 
   return (
     <Layout>
-      {keys.map((key, index) => (
-        <div className="card">
+      {products.productsByPrice.length > 0
+        ? products.productsByPrice.map((product, index) => (
+            <div className="card" key="index">
+              <div className="cardHeader">
+                <div>Label</div>
+                <button className="cardBtn">View All</button>
+              </div>
+              <div style={{ display: "flex" }}>
+                <div className="productContainer">
+                  <div className="productImgContainer">
+                    <img
+                      src="../../-AopznEa9T-apple-iphone-12-dummyapplefsn-original-imafwg8dqq7z8cgh(1).webp"
+                      alt=""
+                    />
+                  </div>
+                  <div className="productInfo">
+                    <div style={{ margin: "5px 0" }}>product name</div>
+                    <div>
+                      <span>4.3</span>
+                      <span> (5254)</span>
+                    </div>
+                    <div className="productPrice">50000$</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))
+        : null}
+
+      {/* {products.productsByPrice.map((product, index) => (
+        <div className="card" key={index}>
           <div className="cardHeader">
-            <div>{`${slug} ${key}`}</div>
+            <div>{product.label}</div>
             <button className="cardBtn">View All</button>
           </div>
           <div style={{ display: "flex" }}>
-            {product.productsByPrice[key].map((product) => (
+            {product.list.map((product) => (
               <div className="productContainer">
                 <div className="productImgContainer">
                   <img
@@ -46,7 +76,7 @@ const ProductListPage = () => {
             ))}
           </div>
         </div>
-      ))}
+      ))} */}
     </Layout>
   );
 };

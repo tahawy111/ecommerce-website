@@ -52,10 +52,13 @@ const NewPage = () => {
     if (title === "") {
       toast.warning("Title is Required");
       return;
+    } else {
+      form.append("title", title);
+    }
+    if (desc !== "") {
+      form.append("description", desc);
     }
 
-    form.append("title", title);
-    form.append("description", desc);
     form.append("category", categoryId);
     form.append("type", type);
     banners.forEach((banner, index) => {
@@ -65,7 +68,6 @@ const NewPage = () => {
       form.append("products", product);
     });
 
-    console.log({ title, desc, categoryId, type, banners, products });
     dispatch(createPage(form)).then(() => {
       toast.success("Page Created Sucessfully");
     });

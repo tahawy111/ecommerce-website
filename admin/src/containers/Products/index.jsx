@@ -8,6 +8,7 @@ import { addProduct } from "../../actions/product.actions";
 import NewModal from "../../components/UI/Modal";
 import "./style.css";
 import { generatePublicUrl } from "../../urlConfig";
+import { toast } from "react-toastify";
 
 const Products = () => {
   const [show, setShow] = useState(false);
@@ -40,6 +41,29 @@ const Products = () => {
     }
   };
   const handleClose = async () => {
+    console.log(productPictures);
+    if (name === "") {
+      toast.error("Product Name Is Required");
+      return;
+    }
+    if (quantity === "") {
+      toast.error("Quantity Is Required");
+      return;
+    }
+    if (price === "") {
+      toast.error("Price Is Required");
+      return;
+    }
+    if (categoryId === "") {
+      toast.error("Category Is Required");
+      return;
+    }
+
+    if (productPictures.length === 0) {
+      toast.error("Product Pictures Is Required");
+      return;
+    }
+
     const form = new FormData();
     form.append("name", name);
     form.append("price", price);
@@ -49,7 +73,10 @@ const Products = () => {
     for (let pic of productPictures) {
       form.append("productPicture", pic);
     }
-    dispatch(addProduct(form));
+    dispatch(addProduct(form)).then(() => {
+      setProductPictures([]);
+      toast.success("Product Created Successfully");
+    });
 
     setShow(false);
   };
@@ -152,6 +179,15 @@ const Products = () => {
                 pic !== undefined && <div key={index}>{pic.name}</div>
             )
           : null}
+        {productPictures.length > 0 && (
+          <Button
+            className="mt-2 btn-sm"
+            variant="danger"
+            onClick={() => setProductPictures([])}
+          >
+            Remove all images added
+          </Button>
+        )}
       </NewModal>
     );
   };

@@ -33,14 +33,29 @@ exports.createPage = async (req, res) => {
     } catch (error) {
       res.status(400).json({ error });
     }
+  } else {
+    const newPage = new Page(req.body);
+
+    try {
+      const page = await newPage.save();
+      return res.status(201).json({ page });
+    } catch (error) {
+      return res.status(400).json({ error: "Something went wrong" });
+    }
   }
+};
 
-  const newPage = new Page(req.body);
+exports.getPage = async (req, res) => {
+  const { category, type } = req.params;
 
-  try {
-    const page = await newPage.save();
-    return res.status(201).json({ page });
-  } catch (error) {
-    return res.status(400).json({ error: "Something went wrong" });
+  if (type === "page") {
+    try {
+      const page = await Page.findOne({ category });
+      res.status(200).json({ page });
+    } catch (error) {
+      res.status(400).json({ error });
+    }
+  } else {
+    res.status(400).json({ error: "The type of category is not (Page)" });
   }
 };

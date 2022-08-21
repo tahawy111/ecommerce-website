@@ -54,21 +54,40 @@ exports.getProductsBySlug = async (req, res) => {
       const products = await Product.find({ category: category._id });
       res.status(200).json({
         products,
-        productsByPrice: {
-          under5k: products.filter((product) => product.price <= 5000),
-          under10k: products.filter(
-            (product) => product.price >= 5000 && product.price <= 10000
-          ),
-          under15k: products.filter(
-            (product) => product.price >= 10000 && product.price <= 15000
-          ),
-          under20k: products.filter(
-            (product) => product.price >= 15000 && product.price <= 20000
-          ),
-          under30k: products.filter(
-            (product) => product.price >= 20000 && product.price <= 30000
-          ),
-        },
+        productsByPrice: [
+          {
+            label: "Under 5000",
+            list: products.filter((product) => product.price <= 5000),
+          },
+          {
+            label: "Under 10000",
+            list: products.filter(
+              (product) => product.price >= 5000 && product.price <= 10000
+            ),
+          },
+          {
+            label: "Under 15000",
+            list: products.filter(
+              (product) => product.price >= 10000 && product.price <= 15000
+            ),
+          },
+          {
+            label: "Under 20000",
+            list: products.filter(
+              (product) => product.price >= 15000 && product.price <= 20000
+            ),
+          },
+          {
+            label: "Under 30000",
+            list: products.filter(
+              (product) => product.price >= 20000 && product.price <= 30000
+            ),
+          },
+          {
+            label: "More Than 30000",
+            list: products.filter((product) => product.price > 30000),
+          },
+        ],
       });
     }
   } catch (error) {
