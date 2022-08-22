@@ -16,6 +16,6 @@ router.post(
   upload.fields([{ name: "banners" }, { name: "products" }]),
   createPage
 );
-router.post("/page/:category/:type", getPage);
+router.get("/page/:category/:type", getPage);
 
 module.exports = router;

@@ -1,5 +1,8 @@
 import axiosIntance from "./../helpers/axios";
 import {
+  getProductPageFailure,
+  getProductPageRequest,
+  getProductPageSuccess,
   getProductsBySlugRequest,
   getProductsBySlugSuccess,
 } from "../slices/productSlice";
@@ -7,7 +10,7 @@ import {
 export const getProductBySlug = (slug) => {
   return async (dispatch) => {
     dispatch(getProductsBySlugRequest());
-    const res = await axiosIntance.get(`products/${slug}`);
+    const res = await axiosIntance.get(`/products/${slug}`);
     if (res.status === 200) {
       dispatch(getProductsBySlugSuccess(res.data));
     }
@@ -15,12 +18,18 @@ export const getProductBySlug = (slug) => {
 };
 export const getProductPage = (payload) => {
   return async (dispatch) => {
-    const { cid, type } = payload;
+    try {
+      const { cid, type } = payload;
+      dispatch(getProductPageRequest());
+      const res = await axiosIntance.get(`/page/${cid}/${type}`);
 
-    const res = await axiosIntance.get(`products/${cid}/${type}`);
-    console.log(res);
-
-    if (res.status === 200) {
+      if (res.status === 200) {
+        dispatch(getProductPageSuccess({ page: res.data.page }));
+      } else {
+        dispatch(getProductPageFailure({ error: res.data.error }));
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 };

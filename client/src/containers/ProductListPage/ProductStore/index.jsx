@@ -3,14 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProductBySlug } from "../../../actions/product.actions";
 import "./style.css";
 import { generatePublicUrl } from "../../../helpers/api";
-import getQuery from "./../../../utils/getQuery";
 
 const ProductStore = (props) => {
   const product = useSelector((state) => state.product);
   const dispatch = useDispatch();
   const { params } = props;
-  const { search } = props.location;
-  const query = getQuery(search);
   useEffect(() => {
     dispatch(getProductBySlug(params.slug));
   }, [dispatch, params.slug]);

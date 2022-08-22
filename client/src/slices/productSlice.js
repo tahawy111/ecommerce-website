@@ -11,6 +11,8 @@ const initialState = {
     under30k: [],
   },
   loading: false,
+  pageRequest: false,
+  page: {},
 };
 
 export const productSlice = createSlice({
@@ -28,10 +30,33 @@ export const productSlice = createSlice({
         loading: false,
       };
     },
+
+    getProductPageRequest: (state) => {
+      return { ...state, page: [], pageRequest: true };
+    },
+    getProductPageSuccess: (state, action) => {
+      return {
+        ...state,
+        page: action.payload.page,
+        pageRequest: false,
+      };
+    },
+    getProductPageFailure: (state, action) => {
+      return {
+        ...state,
+        products: action.payload.error,
+        pageRequest: false,
+      };
+    },
   },
 });
 
-export const { getProductsBySlugRequest, getProductsBySlugSuccess } =
-  productSlice.actions;
+export const {
+  getProductsBySlugRequest,
+  getProductsBySlugSuccess,
+  getProductPageRequest,
+  getProductPageSuccess,
+  getProductPageFailure,
+} = productSlice.actions;
 
 export default productSlice.reducer;
