@@ -25,8 +25,8 @@ const ProductStore = (props) => {
                 <button className="cardBtn">View All</button>
               </div>
               <div style={{ display: "flex" }}>
-                {product.list.map((product) => (
-                  <div className="productContainer">
+                {product.list.map((product, _index) => (
+                  <div className="productContainer" key={_index}>
                     <div className="productImgContainer">
                       <img
                         src={generatePublicUrl(product.productPictures[0].img)}

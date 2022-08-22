@@ -26,13 +26,7 @@ function App() {
     if (auth.authenticate) {
       getInitialData(dispatch);
     }
-  }, [dispatch, auth.authenticate, auth.user.fullName]);
-
-  useEffect(() => {
-    if (auth.authenticate) {
-      toast.success(`Hi ${auth.user.fullName}!`);
-    }
-  }, [auth]);
+  }, [dispatch, auth.authenticate]);
 
   return (
     <Routes>

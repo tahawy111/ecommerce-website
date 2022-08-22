@@ -3,9 +3,8 @@ import { useParams } from "react-router-dom";
 import "./style.css";
 import ProductStore from "./ProductStore/index";
 
-const ProductListPage = () => {
+const ProductListPage = (props) => {
   const params = useParams();
-
   return (
     <Layout>
       <ProductStore params={params} location={window.location} />
