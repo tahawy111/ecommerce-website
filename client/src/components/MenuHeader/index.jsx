@@ -18,7 +18,11 @@ const MenuHeader = (props) => {
       myCategories.push(
         <li key={category.name}>
           {category.parentId ? (
-            <a href={category.slug}>{category.name}</a>
+            <a
+              href={`/${category.slug}?cid=${category._id}&type=${category.type}`}
+            >
+              {category.name}
+            </a>
           ) : (
             <span>{category.name}</span>
           )}
@@ -36,7 +40,7 @@ const MenuHeader = (props) => {
     <div className="menuHeader">
       <ul>
         {category.categories.length > 0
-          ? renderCategories(category.categories)
+          ? renderCategories(category.categories[0].children)
           : null}
       </ul>
     </div>

@@ -19,7 +19,7 @@
   position: relative;
 }
 
-.menuHeader > ul > li > span {
+.menuHeader > ul > li > a {
   display: block;
   line-height: 40px;
   cursor: pointer;
@@ -27,8 +27,10 @@
   font-size: 18px;
   font-weight: bold;
   color: #212121;
+  text-decoration: none;
+  pointer-events: none;
 }
-.menuHeader > ul > li > span:hover {
+.menuHeader > ul > li:hover > a {
   color: #2874f0;
 }
 
