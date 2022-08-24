@@ -1,8 +1,12 @@
+import { useState } from "react";
 import "./style.css";
 import flipkart from "../../images/logo/flipkart.png";
 import goldenStar from "../../images/logo/golden-star.png";
 import { FaSearch } from "react-icons/fa";
-const index = () => {
+import Dropdown from "../Dropdown";
+
+const Header = () => {
+  const [showAccountMenu, setShowAccountMenu] = useState(false);
   return (
     <div className="header">
       <div className="container">
@@ -28,10 +32,28 @@ const index = () => {
         <div className="right">
           <button className="btn">Login</button>
           <a href="/">Become a Seller</a>
+          <Dropdown
+            className="ml-5"
+            show={showAccountMenu}
+            mainTitle="My Account"
+            onClick={() =>
+              showAccountMenu
+                ? setShowAccountMenu(false)
+                : setShowAccountMenu(true)
+            }
+            menu={[
+              { title: "My Profile", href: "/" },
+              { title: "Flipkart Plus Zone", href: "/" },
+              { title: "Orders", href: "/" },
+              { title: "Wishlist", href: "/" },
+              { title: "Rewards" },
+              { title: "Gift Cards", href: "/" },
+            ]}
+          />
         </div>
       </div>
     </div>
   );
 };
 
-export default index;
+export default Header;

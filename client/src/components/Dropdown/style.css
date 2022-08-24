@@ -1,0 +1,28 @@
+li {
+  list-style: none;
+}
+li.mainTitle {
+  color: white;
+}
+span div {
+  background: rgb(255, 255, 255);
+  position: absolute;
+  box-shadow: -5px 0 5px rgba(0, 0, 0, 0.044), 5px 0 5px rgba(0, 0, 0, 0.044);
+  border-radius: 2px;
+}
+
+span div li {
+  padding-right: 15px;
+  cursor: pointer;
+}
+
+span div li:hover {
+  background-color: #e9ecef;
+}
+
+span > li {
+  font-weight: bold;
+}
+span {
+  z-index: 2;
+}
