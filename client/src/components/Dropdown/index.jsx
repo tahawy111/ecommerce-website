@@ -2,6 +2,7 @@ import "./style.css";
 import { BsChevronDown } from "react-icons/bs";
 const Dropdown = (props) => {
   const { show, mainTitle, menu } = props;
+
   return (
     <span {...props}>
       <li
@@ -15,7 +16,11 @@ const Dropdown = (props) => {
         <BsChevronDown style={{ marginRight: "3px", fontSize: "18px" }} />
         {mainTitle}
       </li>
-      <div style={{ display: show ? "block" : "none" }}>
+      <div
+        style={{
+          display: show === "true" ? "block" : "none",
+        }}
+      >
         {menu.map((menu, index) => (
           <li key={index}>
             <a

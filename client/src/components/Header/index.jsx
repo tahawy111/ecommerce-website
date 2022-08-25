@@ -7,6 +7,7 @@ import Dropdown from "../Dropdown";
 
 const Header = () => {
   const [showAccountMenu, setShowAccountMenu] = useState(false);
+
   return (
     <div className="header">
       <div className="container">
@@ -34,7 +35,7 @@ const Header = () => {
           <a href="/">Become a Seller</a>
           <Dropdown
             className="ml-5"
-            show={showAccountMenu}
+            show={showAccountMenu.toString()}
             mainTitle="My Account"
             onClick={() =>
               showAccountMenu
