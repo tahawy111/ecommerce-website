@@ -1,10 +1,10 @@
 import "./style.css";
 import { BsChevronDown } from "react-icons/bs";
 const Dropdown = (props) => {
-  const { show, mainTitle, menu } = props;
+  const { show, maintitle, menu, menuref } = props;
 
   return (
-    <span {...props}>
+    <span {...props} ref={menuref}>
       <li
         className="mainTitle"
         style={{
@@ -14,7 +14,7 @@ const Dropdown = (props) => {
         }}
       >
         <BsChevronDown style={{ marginRight: "3px", fontSize: "18px" }} />
-        {mainTitle}
+        {maintitle}
       </li>
       <div
         style={{

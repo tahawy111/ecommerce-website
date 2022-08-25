@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./style.css";
 import flipkart from "../../images/logo/flipkart.png";
 import goldenStar from "../../images/logo/golden-star.png";
 import { FaSearch } from "react-icons/fa";
 import Dropdown from "../Dropdown";
+import { useRef } from "react";
 
 const Header = () => {
   const [showAccountMenu, setShowAccountMenu] = useState(false);
-
+  const menuRef = useRef(null);
+  useEffect(() => {
+    document.addEventListener("mousedown", (event) => {
+      if (!menuRef.current.contains(event.target)) {
+        setShowAccountMenu(false);
+      }
+    });
+  });
   return (
     <div className="header">
       <div className="container">
@@ -36,7 +44,8 @@ const Header = () => {
           <Dropdown
             className="ml-5"
             show={showAccountMenu.toString()}
-            mainTitle="My Account"
+            maintitle="My Account"
+            menuref={menuRef}
             onClick={() =>
               showAccountMenu
                 ? setShowAccountMenu(false)
