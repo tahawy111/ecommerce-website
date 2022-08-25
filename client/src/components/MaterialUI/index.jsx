@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./style.css";
+import { GrClose } from "react-icons/gr";
 
 const Modal = (props) => {
   if (!props.visible) {
@@ -10,7 +11,7 @@ const Modal = (props) => {
       <div className="modalFixedBg">
         <div style={{ position: "relative" }}>
           <div className="modalClose" onClick={props.onClose}>
-            X
+            <GrClose color={props.iconcolor} />
           </div>
           <div className="modalContainer">{props.children}</div>
         </div>
@@ -23,7 +24,10 @@ const MaterialInput = (props) => {
   const [focus, setFocus] = useState(false);
 
   return (
-    <div className="materialInput">
+    <div
+      className="materialInput"
+      style={{ marginBottom: "15px", ...props.style }}
+    >
       <label
         className={`label ${focus ? "focus" : ""}`}
         style={{
@@ -60,7 +64,7 @@ const MaterialInput = (props) => {
 
 const MaterialButton = (props) => {
   return (
-    <div style={{ width: "90%" }}>
+    <div {...props} style={{ width: "90%" }}>
       <button className="materialButton">{props.title && props.title}</button>
     </div>
   );
