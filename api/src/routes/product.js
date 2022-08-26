@@ -3,6 +3,7 @@ const {
   createProduct,
   getProducts,
   getProductsBySlug,
+  getProductDetailsById,
 } = require("../controller/product.controller");
 const router = require("express").Router();
 const shortid = require("shortid");
@@ -29,5 +30,6 @@ router.post(
 );
 router.get("/product/getProducts", requireSignin, adminMiddlewere, getProducts);
 router.get("/products/:slug", getProductsBySlug);
+router.get("/product/:id", getProductDetailsById);
 
 module.exports = router;

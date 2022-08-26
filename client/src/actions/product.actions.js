@@ -1,5 +1,8 @@
 import axiosIntance from "./../helpers/axios";
 import {
+  getProductDetailsByIdFailure,
+  getProductDetailsByIdRequest,
+  getProductDetailsByIdSuccess,
   getProductPageFailure,
   getProductPageRequest,
   getProductPageSuccess,
@@ -30,6 +33,23 @@ export const getProductPage = (payload) => {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+};
+export const getProductDetailsById = (id) => {
+  return async (dispatch) => {
+    dispatch(getProductDetailsByIdRequest());
+    try {
+      const res = await axiosIntance.get(`/product/${id}`);
+      if (res.status === 200) {
+        dispatch(getProductDetailsByIdSuccess({ product: res.data.product }));
+      } else {
+        dispatch(getProductDetailsByIdFailure({ product: res.data.error }));
+      }
+    } catch (error) {
+      dispatch(
+        getProductDetailsByIdFailure({ product: error.response.data.error })
+      );
     }
   };
 };

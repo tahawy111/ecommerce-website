@@ -98,3 +98,18 @@ exports.getProductsBySlug = async (req, res) => {
     res.status(400).json({ error });
   }
 };
+exports.getProductDetailsById = async (req, res) => {
+  const { id } = req.params;
+
+  if (id) {
+    try {
+      const product = await Product.findById(id);
+      if (!product) return res.status(400).json("Product Not Found");
+      return res.status(200).json({ product });
+    } catch (error) {
+      return res.status(400).json({ error });
+    }
+  } else {
+    return res.status(400).json("Params (Id) Required");
+  }
+};

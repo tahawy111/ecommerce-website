@@ -13,6 +13,7 @@ const initialState = {
   loading: false,
   pageRequest: false,
   page: {},
+  productDetails: {},
 };
 
 export const productSlice = createSlice({
@@ -48,6 +49,27 @@ export const productSlice = createSlice({
         pageRequest: false,
       };
     },
+    getProductDetailsByIdRequest: (state) => {
+      return {
+        ...state,
+        productDetails: {},
+        pageRequest: true,
+      };
+    },
+    getProductDetailsByIdSuccess: (state, action) => {
+      return {
+        ...state,
+        productDetails: action.payload.product,
+        pageRequest: false,
+      };
+    },
+    getProductDetailsByIdFailure: (state, action) => {
+      return {
+        ...state,
+        error: action.payload.error,
+        pageRequest: false,
+      };
+    },
   },
 });
 
@@ -57,6 +79,9 @@ export const {
   getProductPageRequest,
   getProductPageSuccess,
   getProductPageFailure,
+  getProductDetailsByIdRequest,
+  getProductDetailsByIdSuccess,
+  getProductDetailsByIdFailure,
 } = productSlice.actions;
 
 export default productSlice.reducer;

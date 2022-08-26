@@ -1,10 +1,11 @@
 import "./App.css";
-import HomePage from "./containers/HomePage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ProductListPage from "./containers/ProductListPage/index";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { isUserLoggedIn } from "./actions/auth.actions";
+import HomePage from "./containers/HomePage";
+import ProductDetailsPage from "./containers/ProductDetailsPage/index";
+import ProductListPage from "./containers/ProductListPage/index";
 
 function App() {
   const auth = useSelector((state) => state.auth);
@@ -21,6 +22,10 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/:slug" element={<ProductListPage />} />
+          <Route
+            path="/:productSlug/:productId/p"
+            element={<ProductDetailsPage />}
+          />
         </Routes>
       </Router>
     </div>
