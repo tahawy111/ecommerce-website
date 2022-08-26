@@ -4,11 +4,15 @@ import flipkart from "../../images/logo/flipkart.png";
 import goldenStar from "../../images/logo/golden-star.png";
 
 import { FaSearch } from "react-icons/fa";
+import { IoMdCart } from "react-icons/io";
+import { CgProfile } from "react-icons/cg";
+import { AiFillStar, AiOutlinePoweroff } from "react-icons/ai";
 import Dropdown from "../Dropdown";
 import { useRef } from "react";
 import { MaterialButton, MaterialInput, Modal } from "../MaterialUI";
-import { useDispatch } from "react-redux";
-import { userLogin as login } from "./../../actions/auth.actions";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, userLogin as login } from "./../../actions/auth.actions";
+import { BsGiftFill, BsListStars, BsTrophyFill } from "react-icons/bs";
 
 const Header = () => {
   const [showAccountMenu, setShowAccountMenu] = useState(false);
@@ -17,6 +21,7 @@ const Header = () => {
   const [password, setPassword] = useState("");
   const menuRef = useRef(null);
   const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
 
   useEffect(() => {
     document.addEventListener("mousedown", (event) => {
@@ -27,7 +32,9 @@ const Header = () => {
   });
 
   const userLogin = () => {
-    dispatch(login({ email, password }));
+    dispatch(login({ email, password })).then(() => {
+      setLoginModal(false);
+    });
   };
 
   return (
@@ -99,29 +106,67 @@ const Header = () => {
           </span>
         </div>
         <div className="right">
-          <button className="btn" onClick={() => setLoginModal(true)}>
-            Login
-          </button>
+          {!auth.authenticate && (
+            <button className="btn" onClick={() => setLoginModal(true)}>
+              Login
+            </button>
+          )}
           <a href="/">Become a Seller</a>
-          <Dropdown
-            className="ml-5"
-            show={showAccountMenu.toString()}
-            maintitle="My Account"
-            menuref={menuRef}
-            onClick={() =>
-              showAccountMenu
-                ? setShowAccountMenu(false)
-                : setShowAccountMenu(true)
-            }
-            menu={[
-              { title: "My Profile", href: "/" },
-              { title: "Flipkart Plus Zone", href: "/" },
-              { title: "Orders", href: "/" },
-              { title: "Wishlist", href: "/" },
-              { title: "Rewards" },
-              { title: "Gift Cards", href: "/" },
-            ]}
-          />
+
+          {auth.authenticate && (
+            <Dropdown
+              className="ml-5"
+              show={showAccountMenu.toString()}
+              maintitle={auth.user.fullName}
+              menuref={menuRef}
+              onClick={() =>
+                showAccountMenu
+                  ? setShowAccountMenu(false)
+                  : setShowAccountMenu(true)
+              }
+              menu={[
+                {
+                  title: `My Profile`,
+                  href: "/",
+                  icon: <CgProfile color="#2874f0" />,
+                },
+                {
+                  title: "Flipkart Plus Zone",
+                  href: "/",
+                  icon: <AiFillStar color="#2874f0" />,
+                },
+                {
+                  title: "Orders",
+                  href: "/",
+                  icon: <AiFillStar color="#2874f0" />,
+                },
+                {
+                  title: "Wishlist",
+                  href: "/",
+                  icon: <BsListStars color="#2874f0" />,
+                },
+                { title: "Rewards", icon: <BsTrophyFill color="#2874f0" /> },
+                {
+                  title: "Gift Cards",
+                  href: "/",
+                  icon: <BsGiftFill color="#2874f0" />,
+                },
+                {
+                  title: "Logout",
+                  href: "/",
+                  onClick: () => {
+                    dispatch(logout());
+                  },
+                  icon: <AiOutlinePoweroff color="#2874f0" />,
+                },
+              ]}
+            />
+          )}
+
+          <a href="/" style={{ display: "flex", alignItems: "center" }}>
+            <IoMdCart size={23} />
+            <span style={{ fontSize: 17, marginLeft: 5 }}>Cart</span>
+          </a>
         </div>
       </div>
     </div>

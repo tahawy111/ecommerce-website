@@ -2,7 +2,6 @@ import "./style.css";
 import { BsChevronDown } from "react-icons/bs";
 const Dropdown = (props) => {
   const { show, maintitle, menu, menuref } = props;
-
   return (
     <span {...props} ref={menuref}>
       <li
@@ -21,19 +20,37 @@ const Dropdown = (props) => {
           display: show === "true" ? "block" : "none",
         }}
       >
-        {menu.map((menu, index) => (
-          <li key={index}>
-            <a
-              href={menu.href}
+        {menu.map((menu, index) => {
+          const onClick = (e) => {
+            if (menu.onClick) {
+              e.preventDefault();
+              menu.onClick && menu.onClick();
+            }
+          };
+          return (
+            <li
+              key={index}
               style={{
-                pointerEvents: menu.href ? "auto" : "none",
-                color: "black",
+                borderBottom: "1px solid #cacaca",
               }}
             >
-              {menu.title}
-            </a>
-          </li>
-        ))}
+              <a
+                href={menu.href}
+                onClick={onClick || menu.onClick}
+                style={{
+                  pointerEvents: menu.href ? "auto" : "none",
+                  color: "black",
+                  display: "flex",
+                  alignItems: "center",
+                  padding: "5px",
+                  gap: "0 10px",
+                }}
+              >
+                {menu.icon} {menu.title}
+              </a>
+            </li>
+          );
+        })}
       </div>
     </span>
   );

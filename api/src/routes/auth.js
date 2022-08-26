@@ -1,5 +1,5 @@
-// const { requireSignin } = require("../common-middlewere");
-const { signup, signin } = require("../controller/auth.controller");
+const { requireSignin } = require("../common-middlewere");
+const { signup, signin, signout } = require("../controller/auth.controller");
 const {
   validateSignupRequest,
   validateSigninRequest,
@@ -9,6 +9,6 @@ const router = require("express").Router();
 
 router.post("/signup", validateSignupRequest, isRequestValidated, signup);
 router.post("/signin", validateSigninRequest, isRequestValidated, signin);
-// router.post("/signout", requireSignin, signout);
+router.post("/signout", requireSignin, signout);
 
 module.exports = router;

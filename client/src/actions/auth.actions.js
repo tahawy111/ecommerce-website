@@ -1,4 +1,10 @@
-import { loginFailure, loginRequest, loginSuccess } from "../slices/authSlice";
+import {
+  loginFailure,
+  loginRequest,
+  loginSuccess,
+  logoutRequest,
+  logoutSuccess,
+} from "../slices/authSlice";
 import axiosIntance from "./../helpers/axios";
 import { toast } from "react-toastify";
 
@@ -18,6 +24,33 @@ export const userLogin = (tookUser) => {
     } catch (error) {
       dispatch(loginFailure(error.data));
       toast.error(error.data.message);
+    }
+  };
+};
+
+export const logout = () => {
+  return async (dispatch) => {
+    const res = await axiosIntance.post("/signout");
+
+    dispatch(logoutRequest());
+    if (res.status === 200) {
+      localStorage.clear();
+      dispatch(logoutSuccess());
+    } else {
+      dispatch(loginFailure({ error: res.data.error }));
+    }
+  };
+};
+
+export const isUserLoggedIn = () => {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+
+    if (token) {
+      dispatch(loginSuccess({ token, user: JSON.parse(user) }));
+    } else {
+      dispatch(loginFailure({ authenticate: false, error: "Failed to login" }));
     }
   };
 };
