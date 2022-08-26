@@ -34,7 +34,7 @@ const Header = () => {
             </div>
             <div className="rightspace">
               <MaterialInput
-                style={{ marginTop: "50px" }}
+                style={{ marginTop: "50px", marginRight: "15px" }}
                 type="text"
                 label="Enter Email/Enter Mobile Number"
                 value={email}
@@ -42,11 +42,16 @@ const Header = () => {
               />
 
               <MaterialInput
+                style={{ marginRight: "15px" }}
                 type="password"
                 label="Enter Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                rightElement={<a href="#">Forgot?</a>}
+                rightElement={
+                  <a href="/" style={{ color: "#2874f0", fontWeight: 700 }}>
+                    Forgot?
+                  </a>
+                }
               />
               <MaterialButton
                 style={{ marginTop: "15px" }}
@@ -59,7 +64,7 @@ const Header = () => {
                 style={{ marginTop: "15px" }}
                 title="Request OTP"
                 bgColor="#fff"
-                textColor="#ffffff"
+                textColor="#2874f0"
               />
             </div>
           </div>

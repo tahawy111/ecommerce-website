@@ -56,7 +56,9 @@ const MaterialInput = (props) => {
             }
           }}
         />
-        {props.rightElement ? props.rightElement : null}
+        <span className="right-element">
+          {props.rightElement ? props.rightElement : null}
+        </span>
       </div>
     </div>
   );

@@ -17,6 +17,9 @@ span div li {
   padding-right: 15px;
   cursor: pointer;
 }
+.container .right span div li a {
+  font-weight: 400;
+}
 
 span div li:hover {
   background-color: #e9ecef;
