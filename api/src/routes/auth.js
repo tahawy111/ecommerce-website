@@ -1,8 +1,5 @@
 // const { requireSignin } = require("../common-middlewere");
-const {
-  signup,
-  signin /*signout */,
-} = require("../controller/auth.controller");
+const { signup, signin } = require("../controller/auth.controller");
 const {
   validateSignupRequest,
   validateSigninRequest,

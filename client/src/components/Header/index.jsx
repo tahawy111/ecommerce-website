@@ -5,9 +5,10 @@ import goldenStar from "../../images/logo/golden-star.png";
 
 import { FaSearch } from "react-icons/fa";
 import Dropdown from "../Dropdown";
-import loginImage from "../../images/login-image.png";
 import { useRef } from "react";
 import { MaterialButton, MaterialInput, Modal } from "../MaterialUI";
+import { useDispatch } from "react-redux";
+import { userLogin as login } from "./../../actions/auth.actions";
 
 const Header = () => {
   const [showAccountMenu, setShowAccountMenu] = useState(false);
@@ -15,6 +16,7 @@ const Header = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const menuRef = useRef(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     document.addEventListener("mousedown", (event) => {
@@ -23,6 +25,11 @@ const Header = () => {
       }
     });
   });
+
+  const userLogin = () => {
+    dispatch(login({ email, password }));
+  };
+
   return (
     <div className="header">
       <Modal visible={loginModal} onClose={() => setLoginModal(false)}>
@@ -56,15 +63,16 @@ const Header = () => {
               <MaterialButton
                 style={{ marginTop: "15px" }}
                 title="Login"
-                bgColor="#fb641b"
-                textColor="#ffffff"
+                bgcolor="#fb641b"
+                textcolor="#ffffff"
+                onClick={userLogin}
               />
               <p style={{ color: "#878787" }}>OR</p>
               <MaterialButton
                 style={{ marginTop: "15px" }}
                 title="Request OTP"
-                bgColor="#fff"
-                textColor="#2874f0"
+                bgcolor="#fff"
+                textcolor="#2874f0"
               />
             </div>
           </div>

@@ -3,14 +3,9 @@ import Layout from "./../../components/Layout/index";
 import { Form, Button, Container } from "react-bootstrap";
 import Input from "../../components/UI/Input";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  loginFailure,
-  loginRequest,
-  loginSuccess,
-} from "../../slices/authSlice";
-import axiosIntance from "../../helpers/axios";
+
 import { Navigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { userLogin as login } from "../../actions/auth.actions";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
@@ -21,24 +16,8 @@ const Signin = () => {
 
   const userLogin = async (e) => {
     e.preventDefault();
-
     const tookUser = { email, password };
-
-    dispatch(loginRequest(tookUser));
-    try {
-      const { data } = await axiosIntance.post("/admin/signin", tookUser);
-
-      const { token, user } = data;
-
-      localStorage.setItem("token", token);
-
-      localStorage.setItem("user", JSON.stringify(user));
-
-      dispatch(loginSuccess({ token, user }));
-    } catch (error) {
-      dispatch(loginFailure(error.data));
-      toast.error(error.data.message);
-    }
+    dispatch(login(tookUser));
   };
 
   if (auth.authenticate) {

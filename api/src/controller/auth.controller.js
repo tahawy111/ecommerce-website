@@ -29,28 +29,30 @@ exports.signup = async (req, res) => {
 };
 
 exports.signin = async (req, res) => {
-  try {
-    const user = await User.findOne({ email: req.body.email });
-    !user && res.status(400).json({ message: "User not found" });
+  // try {
+  const user = await User.findOne({ email: req.body.email });
+  !user && res.status(400).json({ message: "User not found" });
 
-    if (await bcrypt.compare(req.body.password, user.hash_password)) {
-      const token = jwt.sign(
-        { _id: user._id, role: user.role },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: "30d",
-        }
-      );
-      const { firstName, lastName, email, role, fullName, _id } = user;
+  console.log(user);
 
-      res.status(200).json({
-        token,
-        user: { _id, firstName, lastName, email, role, fullName },
-      });
-    } else {
-      res.status(400).json({ message: "Invalid password" });
-    }
-  } catch (error) {
-    res.status(400).json({ error });
-  }
+  // if (await bcrypt.compare(req.body.password, user.hash_password)) {
+  //   const token = jwt.sign(
+  //     { _id: user._id, role: user.role },
+  //     process.env.JWT_SECRET,
+  //     {
+  //       expiresIn: "2h",
+  //     }
+  //   );
+  //   const { firstName, lastName, email, role, fullName, _id } = user;
+
+  //   res.status(200).json({
+  //     token,
+  //     user: { _id, firstName, lastName, email, role, fullName },
+  //   });
+  // } else {
+  //   res.status(400).json({ message: "Invalid password" });
+  // }
+  // } catch (error) {
+  //   res.status(400).json({ error });
+  // }
 };
