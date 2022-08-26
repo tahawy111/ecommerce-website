@@ -104,12 +104,11 @@ exports.getProductDetailsById = async (req, res) => {
   if (id) {
     try {
       const product = await Product.findById(id);
-      if (!product) return res.status(400).json("Product Not Found");
       return res.status(200).json({ product });
     } catch (error) {
       return res.status(400).json({ error });
     }
   } else {
-    return res.status(400).json("Params (Id) Required");
+    return res.status(400).json({ error: "Params (Id) Required" });
   }
 };
