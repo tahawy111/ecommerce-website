@@ -6,7 +6,7 @@ export const userLogin = (tookUser) => {
   return async (dispatch) => {
     dispatch(loginRequest());
     try {
-      const { data } = await axiosIntance.post("/admin/signin", tookUser);
+      const { data } = await axiosIntance.post("/signin", tookUser);
 
       const { token, user } = data;
 

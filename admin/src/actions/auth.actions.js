@@ -5,10 +5,9 @@ export const userLogin = (tookUser) => {
   return async (dispatch) => {
     dispatch(loginRequest(tookUser));
     try {
-      const res = await axiosIntance.post("/signin", tookUser);
-      console.log(res);
+      const { data } = await axiosIntance.post("/admin/signin", tookUser);
 
-      const { token, user } = res.data;
+      const { token, user } = data;
 
       localStorage.setItem("token", token);
 
