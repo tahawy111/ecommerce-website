@@ -25,6 +25,7 @@ const ProductStore = (props) => {
               <div style={{ display: "flex" }}>
                 {product.list.map((product, _index) => (
                   <Link
+                    key={_index}
                     to={`/${product.slug}/${product._id}/p`}
                     style={{
                       display: "block",
@@ -34,7 +35,7 @@ const ProductStore = (props) => {
                       borderRadius: "10px",
                     }}
                   >
-                    <div className="productContainer" key={_index}>
+                    <div className="productContainer">
                       <div className="productImgContainer">
                         <img
                           src={generatePublicUrl(

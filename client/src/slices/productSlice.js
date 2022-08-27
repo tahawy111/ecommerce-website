@@ -53,21 +53,21 @@ export const productSlice = createSlice({
       return {
         ...state,
         productDetails: {},
-        pageRequest: true,
+        loading: true,
       };
     },
     getProductDetailsByIdSuccess: (state, action) => {
       return {
         ...state,
         productDetails: action.payload.product,
-        pageRequest: false,
+        loading: false,
       };
     },
     getProductDetailsByIdFailure: (state, action) => {
       return {
         ...state,
         error: action.payload.error,
-        pageRequest: false,
+        loading: false,
       };
     },
   },
