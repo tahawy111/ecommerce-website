@@ -36,7 +36,13 @@ export const authSlice = createSlice({
     },
     logoutSuccess: (state) => {
       localStorage.clear();
-      return { ...state, authenticate: false, loading: false };
+      return {
+        ...state,
+        authenticate: false,
+        loading: false,
+        token: null,
+        user: null,
+      };
     },
     logoutFailure: (state, action) => {
       return {

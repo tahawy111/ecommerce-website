@@ -69,13 +69,20 @@ const MaterialButton = (props) => {
     props.onClick && props.onClick();
   };
   return (
-    <div {...props} style={{ width: "90%" }}>
+    <div {...props} style={{ width: "90%", ...props.style }}>
       <button
         className="materialButton"
-        style={{ backgroundColor: props.bgcolor, color: props.textcolor }}
+        style={{
+          backgroundColor: props.bgcolor,
+          color: props.textcolor,
+          alignItems: "center",
+          display: "flex",
+          justifyContent: "center",
+        }}
         onClick={onClick}
       >
-        {props.title && props.title}
+        <span style={{ marginRight: "10px" }}>{props.icon && props.icon}</span>
+        <span>{props.title && props.title}</span>
       </button>
     </div>
   );
