@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,13 +13,13 @@ const ProductDetailsPage = () => {
   const { productId } = useParams();
   const dispatch = useDispatch();
   const { productDetails } = useSelector((state) => state.product);
+  const [imgIndex, setImgIndex] = useState(0);
   useEffect(() => {
     dispatch(getProductDetailsById(productId));
   }, [productId, dispatch]);
   if (Object.keys(productDetails).length === 0) {
     return null;
   }
-  console.log(Object.keys(productDetails).length === 0);
 
   return (
     <Layout>
@@ -27,8 +27,14 @@ const ProductDetailsPage = () => {
         <div className="flexRow">
           <div className="verticalImageStack">
             {productDetails.productPictures.map((thumb, index) => (
-              <div className="thumbnail">
-                <img src={generatePublicUrl(thumb.img)} alt={thumb.img} />
+              <div
+                className={`thumbnail${index === imgIndex ? " active" : ""}`}
+              >
+                <img
+                  src={generatePublicUrl(thumb.img)}
+                  alt={thumb.img}
+                  onClick={(e) => setImgIndex(index)}
+                />
               </div>
             ))}
             {/* <div className="thumbnail active">
@@ -41,8 +47,10 @@ const ProductDetailsPage = () => {
           <div className="productDescContainer">
             <div className="productDescImgContainer">
               <img
-                src={generatePublicUrl(productDetails.productPictures[0].img)}
-                alt={`${productDetails.productPictures[0].img}`}
+                src={generatePublicUrl(
+                  productDetails.productPictures[imgIndex].img
+                )}
+                alt={`${productDetails.productPictures[imgIndex].img}`}
               />
             </div>
 

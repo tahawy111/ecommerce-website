@@ -4,6 +4,7 @@ import { getProductBySlug } from "../../../actions/product.actions";
 import "./style.css";
 import { generatePublicUrl } from "../../../helpers/api";
 import { Link } from "react-router-dom";
+import Card from "../../../components/UI/Card";
 
 const ProductStore = (props) => {
   const product = useSelector((state) => state.product);
@@ -17,11 +18,12 @@ const ProductStore = (props) => {
     <>
       {product.productsByPrice[0] !== undefined
         ? product.productsByPrice[0].map((product, index) => (
-            <div className="card" key={index}>
-              <div className="cardHeader">
-                <div>{product.label}</div>
-                <button className="cardBtn">View All</button>
-              </div>
+            <Card
+              key={index}
+              header_left={<div>{product.label}</div>}
+              header_right={<button className="cardBtn">View All</button>}
+              style={{ margin: "20px", width: "calc( 100% - 40px )" }}
+            >
               <div style={{ display: "flex" }}>
                 {product.list.map((product, _index) => (
                   <Link
@@ -56,7 +58,7 @@ const ProductStore = (props) => {
                   </Link>
                 ))}
               </div>
-            </div>
+            </Card>
           ))
         : null}
     </>
