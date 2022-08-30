@@ -65,9 +65,6 @@ const MaterialInput = (props) => {
 };
 
 const MaterialButton = (props) => {
-  const onClick = () => {
-    props.onClick && props.onClick();
-  };
   return (
     <div {...props} style={{ width: "90%", ...props.style }}>
       <button
@@ -79,7 +76,7 @@ const MaterialButton = (props) => {
           display: "flex",
           justifyContent: "center",
         }}
-        onClick={onClick}
+        onClick={() => props.onClick()}
       >
         <span style={{ marginRight: "10px" }}>{props.icon && props.icon}</span>
         <span>{props.title && props.title}</span>

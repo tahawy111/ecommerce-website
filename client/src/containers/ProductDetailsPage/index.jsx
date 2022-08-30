@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductDetailsById } from "../../actions/product.actions";
 import { IoIosArrowForward, IoIosStar, IoMdCart } from "react-icons/io";
@@ -56,15 +56,20 @@ const ProductDetailsPage = () => {
 
             {/* action buttons */}
             <div className="flexRow">
-              <MaterialButton
-                title="ADD TO CART"
-                bgcolor="#ff9f00"
-                textcolor="#ffffff"
-                style={{
-                  marginRight: "5px",
-                }}
-                icon={<IoMdCart size={20} />}
-              />
+              <Link
+                to="/cart"
+                style={{ textDecoration: "none", width: "100%" }}
+              >
+                <MaterialButton
+                  title="ADD TO CART"
+                  bgcolor="#ff9f00"
+                  textcolor="#ffffff"
+                  style={{
+                    marginRight: "5px",
+                  }}
+                  icon={<IoMdCart size={20} />}
+                />
+              </Link>
               <MaterialButton
                 title="BUY NOW"
                 bgcolor="#fb641b"

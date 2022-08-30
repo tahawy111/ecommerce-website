@@ -1,0 +1,11 @@
+.cartContainer {
+  display: flex;
+  max-width: 1260px;
+  padding: 20px 20px;
+  justify-content: space-between;
+}
+.cartItemDetails {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}

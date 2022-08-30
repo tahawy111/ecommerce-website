@@ -1,3 +1,6 @@
 * {
   font-weight: 700;
 }
+.flexRow {
+  display: flex;
+}

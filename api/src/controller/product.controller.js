@@ -49,40 +49,40 @@ exports.getProductsBySlug = async (req, res) => {
   const { slug } = req.params;
 
   try {
-    const category = await Category.findOne({ slug }).select("_id");
+    const category = await Category.findOne({ slug }).select("_id name");
     if (category) {
       const products = await Product.find({ category: category._id });
       const productsByPrice = [
         {
-          label: "Under 5000",
+          label: `${category.name} Under 5000`,
           list: products.filter((product) => product.price <= 5000),
         },
         {
-          label: "Under 10000",
+          label: `${category.name} Under 10000`,
           list: products.filter(
             (product) => product.price >= 5000 && product.price <= 10000
           ),
         },
         {
-          label: "Under 15000",
+          label: `${category.name} Under 15000`,
           list: products.filter(
             (product) => product.price >= 10000 && product.price <= 15000
           ),
         },
         {
-          label: "Under 20000",
+          label: `${category.name} Under 20000`,
           list: products.filter(
             (product) => product.price >= 15000 && product.price <= 20000
           ),
         },
         {
-          label: "Under 30000",
+          label: `${category.name} Under 30000`,
           list: products.filter(
             (product) => product.price >= 20000 && product.price <= 30000
           ),
         },
         {
-          label: "More Than 30000",
+          label: `${category.name} More Than 30000`,
           list: products.filter((product) => product.price > 30000),
         },
       ];
