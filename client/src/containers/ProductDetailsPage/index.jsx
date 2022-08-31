@@ -9,6 +9,7 @@ import { AiFillThunderbolt } from "react-icons/ai";
 import { MaterialButton } from "../../components/MaterialUI";
 import "./style.css";
 import { generatePublicUrl } from "../../helpers/api";
+import { addToCart } from "./../../actions/cart.actions";
 const ProductDetailsPage = () => {
   const { productId } = useParams();
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ const ProductDetailsPage = () => {
             {productDetails.productPictures.map((thumb, index) => (
               <div
                 className={`thumbnail${index === imgIndex ? " active" : ""}`}
+                key={index}
               >
                 <img
                   src={generatePublicUrl(thumb.img)}
@@ -56,20 +58,25 @@ const ProductDetailsPage = () => {
 
             {/* action buttons */}
             <div className="flexRow">
-              <Link
+              {/* <Link
                 to="/cart"
                 style={{ textDecoration: "none", width: "100%" }}
-              >
-                <MaterialButton
-                  title="ADD TO CART"
-                  bgcolor="#ff9f00"
-                  textcolor="#ffffff"
-                  style={{
-                    marginRight: "5px",
-                  }}
-                  icon={<IoMdCart size={20} />}
-                />
-              </Link>
+              > */}
+              <MaterialButton
+                title="ADD TO CART"
+                bgcolor="#ff9f00"
+                textcolor="#ffffff"
+                style={{
+                  marginRight: "5px",
+                }}
+                icon={<IoMdCart size={20} />}
+                onClick={() => {
+                  const { _id, anem, price } = productDetails;
+                  const img = productDetails.productPictures[0].img;
+                  dispatch(addToCart({ _id, anem, price, img }));
+                }}
+              />
+              {/* </Link> */}
               <MaterialButton
                 title="BUY NOW"
                 bgcolor="#fb641b"
