@@ -65,7 +65,6 @@ exports.addItemToCart = async (req, res) => {
       }
     } else {
       // if i chosed another unique product
-      console.log("if i chosed another unique product");
       cart.totalQuantity += 1;
       cart.totalPrice += price;
       cart.cartItems.push(newItem);
