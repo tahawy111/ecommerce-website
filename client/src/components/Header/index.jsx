@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import "./style.css";
 import flipkart from "../../images/logo/flipkart.png";
 import goldenStar from "../../images/logo/golden-star.png";
-
 import { FaSearch } from "react-icons/fa";
 import { IoMdCart } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
@@ -13,6 +12,7 @@ import { MaterialButton, MaterialInput, Modal } from "../MaterialUI";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, userLogin as login } from "./../../actions/auth.actions";
 import { BsGiftFill, BsListStars, BsTrophyFill } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [showAccountMenu, setShowAccountMenu] = useState(false);
@@ -21,6 +21,7 @@ const Header = () => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
+  const cart = useSelector((state) => state.cart);
 
   const menuRef = useRef("");
   useEffect(() => {
@@ -165,10 +166,17 @@ const Header = () => {
             />
           )}
 
-          <a href="/" style={{ display: "flex", alignItems: "center" }}>
-            <IoMdCart size={23} />
-            <span style={{ fontSize: 17, marginLeft: 5 }}>Cart</span>
-          </a>
+          {auth.authenticate && (
+            <Link to="/cart" style={{ display: "flex", alignItems: "center" }}>
+              <IoMdCart size={23} />
+              <span style={{ fontSize: 17, marginLeft: 5 }}>
+                Cart{" "}
+                {cart.cart.totalQuantity && (
+                  <span className="badge">{cart.cart.totalQuantity}</span>
+                )}
+              </span>
+            </Link>
+          )}
         </div>
       </div>
     </div>

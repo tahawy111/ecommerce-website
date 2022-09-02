@@ -7,6 +7,7 @@ import HomePage from "./containers/HomePage";
 import ProductDetailsPage from "./containers/ProductDetailsPage";
 import ProductListPage from "./containers/ProductListPage";
 import CartPage from "./containers/CartPage";
+import { getCartById } from "./actions/cart.actions";
 
 function App() {
   const auth = useSelector((state) => state.auth);
@@ -15,7 +16,7 @@ function App() {
   useEffect(() => {
     if (auth.authenticate) {
       dispatch(isUserLoggedIn());
-      // dispatch()
+      dispatch(getCartById(auth.user._id));
     }
   }, [auth.authenticate, dispatch]);
 

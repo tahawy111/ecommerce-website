@@ -3,6 +3,9 @@ import {
   addItemToCartFailure,
   addItemToCartRequest,
   addItemToCartSuccess,
+  getCartByIdFailure,
+  getCartByIdRequest,
+  getCartByIdSuccess,
 } from "../slices/cartSlice";
 export const addToCart = (product) => {
   return async (dispatch) => {
@@ -17,6 +20,22 @@ export const addToCart = (product) => {
     } else {
       dispatch(addItemToCartFailure({ error: res.data.error }));
     }
+  };
+};
+
+export const getCartById = (id) => {
+  return async (dispatch) => {
+    dispatch(getCartByIdRequest());
+    try {
+      const res = await axiosIntance.get(`/user/cart/get-cart-by-id/${id}`);
+      dispatch(getCartByIdSuccess({ cart: res.data.cart }));
+    } catch (error) {
+      dispatch(getCartByIdFailure({ error: error.data.error }));
+    }
+    // console.log(res.data);
+    // if (res.status === 200) {
+    //   return;
+    // }
   };
 };
 
