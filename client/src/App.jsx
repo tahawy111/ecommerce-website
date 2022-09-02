@@ -15,6 +15,7 @@ function App() {
   useEffect(() => {
     if (auth.authenticate) {
       dispatch(isUserLoggedIn());
+      // dispatch()
     }
   }, [auth.authenticate, dispatch]);
 
