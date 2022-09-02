@@ -1,23 +1,22 @@
-import { AddToCart } from "../slices/cartSlice";
-import { store } from "../store/store";
+import axiosIntance from "../helpers/axios";
+import {
+  addItemToCartFailure,
+  addItemToCartRequest,
+  addItemToCartSuccess,
+} from "../slices/cartSlice";
 export const addToCart = (product) => {
   return async (dispatch) => {
-    const { cartItems } = store.getState().cart;
-    //     console.log("action::products", cartItems);
-
-    const qty = cartItems[product._id]
-      ? parseInt(cartItems[product._id].qty + 1)
-      : 1;
-
-    cartItems[product._id] = { ...product, qty };
-
-    dispatch(
-      AddToCart({
-        cartItems: {
-          [product._id]: product,
-        },
-      })
-    );
+    const payload = {
+      cartItems: product,
+    };
+    dispatch(addItemToCartRequest());
+    const res = await axiosIntance.post("/user/cart/add-to-cart", payload);
+    console.log(res);
+    if (res.status === 201 || res.status === 200) {
+      dispatch(addItemToCartSuccess({ cart: res.data.cart }));
+    } else {
+      dispatch(addItemToCartFailure({ error: res.data.error }));
+    }
   };
 };
 

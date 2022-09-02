@@ -17,6 +17,7 @@ function App() {
       dispatch(isUserLoggedIn());
     }
   }, [auth.authenticate, dispatch]);
+
   return (
     <div className="App">
       <Router>

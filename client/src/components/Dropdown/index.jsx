@@ -36,7 +36,7 @@ const Dropdown = (props) => {
             >
               <a
                 href={menu.href}
-                onClick={onClick || menu.onClick}
+                onClick={menu.onClick && onClick}
                 style={{
                   pointerEvents: menu.href ? "auto" : "none",
                   color: "black",

@@ -19,10 +19,10 @@ const Header = () => {
   const [loginModal, setLoginModal] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const menuRef = useRef(null);
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
+  const menuRef = useRef("");
   useEffect(() => {
     document.addEventListener("mousedown", (event) => {
       if (!menuRef.current.contains(event.target)) {
@@ -69,18 +69,20 @@ const Header = () => {
               />
               <MaterialButton
                 style={{ marginTop: "15px" }}
-                title="Login"
                 bgcolor="#fb641b"
                 textcolor="#ffffff"
                 onClick={userLogin}
-              />
+              >
+                <span>Login</span>
+              </MaterialButton>
               <p style={{ color: "#878787" }}>OR</p>
               <MaterialButton
                 style={{ marginTop: "15px" }}
-                title="Request OTP"
                 bgcolor="#fff"
                 textcolor="#2874f0"
-              />
+              >
+                <span>Request OTP</span>
+              </MaterialButton>
             </div>
           </div>
         </div>

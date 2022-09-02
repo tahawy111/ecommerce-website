@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductDetailsById } from "../../actions/product.actions";
 import { IoIosArrowForward, IoIosStar, IoMdCart } from "react-icons/io";
@@ -63,29 +63,38 @@ const ProductDetailsPage = () => {
                 style={{ textDecoration: "none", width: "100%" }}
               > */}
               <MaterialButton
-                title="ADD TO CART"
                 bgcolor="#ff9f00"
                 textcolor="#ffffff"
                 style={{
                   marginRight: "5px",
                 }}
-                icon={<IoMdCart size={20} />}
                 onClick={() => {
-                  const { _id, anem, price } = productDetails;
+                  const { _id, name, price, quantity } = productDetails;
                   const img = productDetails.productPictures[0].img;
-                  dispatch(addToCart({ _id, anem, price, img }));
+                  dispatch(
+                    addToCart({ _id, name, qtyInStore: quantity, price, img })
+                  );
                 }}
-              />
+              >
+                <span style={{ marginRight: "10px" }}>
+                  <IoMdCart size={20} />
+                </span>
+                <span>ADD TO CART</span>
+              </MaterialButton>
+
               {/* </Link> */}
               <MaterialButton
-                title="BUY NOW"
                 bgcolor="#fb641b"
                 textcolor="#ffffff"
                 style={{
                   marginLeft: "5px",
                 }}
-                icon={<AiFillThunderbolt size={20} />}
-              />
+              >
+                <span style={{ marginRight: "10px" }}>
+                  <AiFillThunderbolt size={20} />
+                </span>
+                <span>BUY NOW</span>
+              </MaterialButton>
             </div>
           </div>
         </div>
@@ -94,19 +103,27 @@ const ProductDetailsPage = () => {
           <div className="breed">
             <ul>
               <li>
-                <a href="#">Home</a>
+                <a href="/" style={{ pointerEvents: "none" }}>
+                  Home
+                </a>
                 <IoIosArrowForward />
               </li>
               <li>
-                <a href="#">Mobiles</a>
+                <a href="/" style={{ pointerEvents: "none" }}>
+                  Mobiles
+                </a>
                 <IoIosArrowForward />
               </li>
               <li>
-                <a href="#">Samsung</a>
+                <a href="/" style={{ pointerEvents: "none" }}>
+                  Samsung
+                </a>
                 <IoIosArrowForward />
               </li>
               <li>
-                <a href="#">{productDetails.name}</a>
+                <a href="/" style={{ pointerEvents: "none" }}>
+                  {productDetails.name}
+                </a>
               </li>
             </ul>
           </div>
