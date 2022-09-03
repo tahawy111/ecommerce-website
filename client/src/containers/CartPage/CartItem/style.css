@@ -45,7 +45,7 @@
   align-items: center;
 }
 .quantityControl button {
-  width: 30px;
+  /* width: 30px; */
   height: 30px;
   border-radius: 15px;
   border: none;

@@ -1,5 +1,9 @@
 const { requireSignin, userMiddlewere } = require("../common-middlewere");
-const { addItemToCart, getCartById } = require("../controller/cart.controller");
+const {
+  addItemToCart,
+  getCartById,
+  updateCartQty,
+} = require("../controller/cart.controller");
 const router = require("express").Router();
 
 router.post(
@@ -13,6 +17,12 @@ router.get(
   requireSignin,
   userMiddlewere,
   getCartById
+);
+router.put(
+  "/user/cart/update-cart-quantity",
+  requireSignin,
+  userMiddlewere,
+  updateCartQty
 );
 
 module.exports = router;

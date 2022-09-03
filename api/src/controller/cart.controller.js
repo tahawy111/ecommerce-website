@@ -86,3 +86,10 @@ exports.getCartById = async (req, res) => {
     return res.status(400).json({ error });
   }
 };
+
+exports.updateCartQty = async (req, res) => {
+  res.status(200).json(req.body);
+  // try {
+  //   const cart = await Cart.findByIdAndUpdate(req.body.cartId, Qty);
+  // } catch (error) {}
+};
