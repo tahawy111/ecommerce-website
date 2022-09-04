@@ -88,8 +88,25 @@ exports.getCartById = async (req, res) => {
 };
 
 exports.updateCartQty = async (req, res) => {
-  res.status(200).json(req.body);
-  // try {
-  //   const cart = await Cart.findByIdAndUpdate(req.body.cartId, Qty);
-  // } catch (error) {}
+  const cart = await Cart.findById(req.body.cartId);
+  if (cart) {
+    try {
+      // const item = cart.cartItems.find(
+      //   (item) => item._id === req.body.productId
+      // );
+
+      let indexOfItem = -1;
+      for (let i = 0; i < cart.cartItems.length; i++) {
+        if (cart.cartItems[i]._id === req.body.productId) {
+          indexOfItem = i;
+          break;
+        }
+      }
+
+      cart.cartItems[i].price = cart.cartItems[i].priceOfOne * req.body.qty;
+
+      const _cart = await Cart.findByIdAndUpdate(req.body.cartId, cart);
+      res.status(200).json({ _cart });
+    } catch (error) {}
+  }
 };
