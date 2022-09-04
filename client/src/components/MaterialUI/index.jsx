@@ -76,6 +76,7 @@ const MaterialButton = (props) => {
           alignItems: "center",
           display: "flex",
           justifyContent: "center",
+          ...props.style,
         }}
         onClick={onClick}
       >

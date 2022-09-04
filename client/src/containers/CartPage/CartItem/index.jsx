@@ -8,7 +8,9 @@ import { updateCartQty } from "../../../actions/cart.actions";
 const CartItem = (props) => {
   const { item, key } = props;
   const [qty, setQty] = useState(item.quantity);
+  const [showUpdateBtn, setShowUpdateBtn] = useState(false);
   const auth = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
   return (
     <div key={key} className="flexRow">
@@ -20,20 +22,27 @@ const CartItem = (props) => {
           <p>{item.name}</p>
           <p>{item.price}$</p>
         </div>
-        <div>Delivary in 3 - 5 days</div>
       </div>
       <div style={{ display: "flex", margin: "5px 0" }}>
         <div className="quantityControl">
+          <label htmlFor="qtyInput">Quantity: </label>
           <input
             type="number"
+            id="qtyInput"
             value={qty}
-            onChange={(e) => setQty(e.target.value)}
+            onChange={(e) => {
+              setQty(e.target.value);
+              setShowUpdateBtn(true);
+            }}
           />
           <MaterialButton
             bgcolor="#ff9f00"
             textcolor="#ffffff"
+            style={{ visibility: showUpdateBtn ? "visible" : "hidden" }}
             onClick={() => {
-              dispatch(updateCartQty(auth.user._id, item._id, qty));
+              dispatch(updateCartQty(auth.user._id, item._id, qty)).then(() => {
+                setShowUpdateBtn(false);
+              });
             }}
           >
             Update

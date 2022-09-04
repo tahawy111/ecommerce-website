@@ -6,6 +6,9 @@ import {
   getCartByIdFailure,
   getCartByIdRequest,
   getCartByIdSuccess,
+  updateCartQuantityFailure,
+  updateCartQuantityRequest,
+  updateCartQuantitySuccess,
 } from "../slices/cartSlice";
 export const addToCart = (product) => {
   return async (dispatch) => {
@@ -41,12 +44,17 @@ export const getCartById = (id) => {
 
 export const updateCartQty = (cartId, productId, qty) => {
   return async (dispatch) => {
-    const res = await axiosIntance.put("/user/cart/update-cart-quantity", {
-      cartId,
-      productId,
-      qty,
-    });
-    console.log(res);
+    dispatch(updateCartQuantityRequest());
+    try {
+      const res = await axiosIntance.put("/user/cart/update-cart-quantity", {
+        cartId,
+        productId,
+        qty,
+      });
+      dispatch(updateCartQuantitySuccess({ cart: res.data.cart }));
+    } catch (error) {
+      dispatch(updateCartQuantityFailure({ error }));
+    }
   };
 };
 

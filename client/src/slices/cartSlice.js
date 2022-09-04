@@ -31,6 +31,28 @@ export const cartSlice = createSlice({
         error: action.payload.error,
       };
     },
+    updateCartQuantityRequest: (state) => {
+      return {
+        ...state,
+        loading: false,
+        cart: {},
+        error: "",
+      };
+    },
+    updateCartQuantitySuccess: (state, action) => {
+      return {
+        ...state,
+        loading: false,
+        cart: action.payload.cart,
+      };
+    },
+    updateCartQuantityFailure: (state, action) => {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+    },
   },
 });
 
@@ -41,6 +63,9 @@ export const {
   getCartByIdRequest,
   getCartByIdSuccess,
   getCartByIdFailure,
+  updateCartQuantityRequest,
+  updateCartQuantitySuccess,
+  updateCartQuantityFailure,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

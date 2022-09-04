@@ -90,23 +90,35 @@ exports.getCartById = async (req, res) => {
 exports.updateCartQty = async (req, res) => {
   const cart = await Cart.findById(req.body.cartId);
   if (cart) {
-    try {
-      // const item = cart.cartItems.find(
-      //   (item) => item._id === req.body.productId
-      // );
-
-      let indexOfItem = -1;
-      for (let i = 0; i < cart.cartItems.length; i++) {
-        if (cart.cartItems[i]._id === req.body.productId) {
-          indexOfItem = i;
-          break;
-        }
+    let indexOfItem = -1;
+    for (let i = 0; i < cart.cartItems.length; i++) {
+      if (cart.cartItems[i]._id === req.body.productId) {
+        indexOfItem = i;
+        break;
       }
+    }
+    if (indexOfItem >= 0) {
+      try {
+        cart.cartItems[indexOfItem].quantity = +req.body.qty;
+        cart.totalQuantity =
+          cart.totalQuantity - cart.cartItems[indexOfItem].quantity;
+        cart.totalQuantity = +req.body.qty;
 
-      cart.cartItems[i].price = cart.cartItems[i].priceOfOne * req.body.qty;
+        cart.totalPrice =
+          cart.totalPrice -
+          cart.cartItems[indexOfItem].price +
+          cart.cartItems[indexOfItem].priceOfOne * +req.body.qty;
 
-      const _cart = await Cart.findByIdAndUpdate(req.body.cartId, cart);
-      res.status(200).json({ _cart });
-    } catch (error) {}
+        cart.cartItems[indexOfItem].price =
+          cart.cartItems[indexOfItem].priceOfOne * +req.body.qty;
+
+        const _cart = await Cart.findByIdAndUpdate(req.body.cartId, cart, {
+          new: true,
+        });
+        res.status(200).json({ cart: _cart });
+      } catch (error) {
+        res.status(400).json({ error });
+      }
+    }
   }
 };
