@@ -6,21 +6,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateCartQty } from "../../../actions/cart.actions";
 
 const CartItem = (props) => {
-  const { item, key } = props;
+  const { item, _key } = props;
   const [qty, setQty] = useState(item.quantity);
   const [showUpdateBtn, setShowUpdateBtn] = useState(false);
   const auth = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   return (
-    <div key={key} className="flexRow">
+    <div key={_key} className="flexRow">
       <div className="cartProImgContainer">
         <img src={generatePublicUrl(item.img)} alt="" />
       </div>
       <div className="cartItemDetails">
         <div>
           <p>{item.name}</p>
-          <p>{item.price}$</p>
+          <p>{item.price.toLocaleString()}$</p>
         </div>
       </div>
       <div style={{ display: "flex", margin: "5px 0" }}>

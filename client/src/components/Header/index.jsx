@@ -167,14 +167,22 @@ const Header = () => {
           )}
 
           {auth.authenticate && (
-            <Link to="/cart" style={{ display: "flex", alignItems: "center" }}>
+            <Link
+              to="/cart"
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
               <IoMdCart size={23} />
-              <span style={{ fontSize: 17, marginLeft: 5 }}>
-                Cart{" "}
-                {cart.cart.totalQuantity && (
-                  <span className="badge">{cart.cart.totalQuantity}</span>
-                )}
-              </span>
+              <span style={{ fontSize: 17 }}>Cart </span>
+              {cart.cart.totalQuantity && (
+                <div className="badge">
+                  {cart.cart.totalQuantity > 99
+                    ? "+99"
+                    : cart.cart.totalQuantity}
+                </div>
+              )}
             </Link>
           )}
         </div>

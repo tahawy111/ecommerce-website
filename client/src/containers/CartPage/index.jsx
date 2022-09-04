@@ -14,7 +14,7 @@ const CartPage = () => {
           <Card header_left="My Cart" header_right={<div>Deliver To</div>}>
             {cartItems &&
               cartItems.map((item, index) => (
-                <CartItem key={index} item={item} />
+                <CartItem key={index} _key={index} item={item} />
               ))}
           </Card>
           <Card style={{ width: "500px" }}>Price</Card>

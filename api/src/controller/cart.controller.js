@@ -99,10 +99,10 @@ exports.updateCartQty = async (req, res) => {
     }
     if (indexOfItem >= 0) {
       try {
-        cart.cartItems[indexOfItem].quantity = +req.body.qty;
         cart.totalQuantity =
           cart.totalQuantity - cart.cartItems[indexOfItem].quantity;
-        cart.totalQuantity = +req.body.qty;
+        cart.totalQuantity += +req.body.qty;
+        cart.cartItems[indexOfItem].quantity = +req.body.qty;
 
         cart.totalPrice =
           cart.totalPrice -
