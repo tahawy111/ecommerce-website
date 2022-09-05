@@ -10,7 +10,6 @@ const CartItem = (props) => {
   const [qty, setQty] = useState(item.quantity);
   const [showUpdateBtn, setShowUpdateBtn] = useState(false);
   const auth = useSelector((state) => state.auth);
-
   const dispatch = useDispatch();
   return (
     <div key={_key} className="flexRow">
